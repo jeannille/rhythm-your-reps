@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RhythmnReps">
         <activity
+            android:name=".WWorkshopActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
