@@ -35,4 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // add full ExoPlayer library for now, for handling music w/in app
+    //updated to latest version as of 11-18-21 release notes
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
 }

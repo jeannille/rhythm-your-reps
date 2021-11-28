@@ -11,4 +11,10 @@ public class WWorkshopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wworkshop);
     }
+
+    //Exoplayer instance
+
+    //Create view & attach player to a view
+
+    //remember to release ExoPlayer w/ ExoPlayer.release
 }
