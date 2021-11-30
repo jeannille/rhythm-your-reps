@@ -38,4 +38,6 @@ dependencies {
     // add full ExoPlayer library for now, for handling music w/in app
     //updated to latest version as of 11-18-21 release notes
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

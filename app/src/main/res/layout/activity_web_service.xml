@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WebServiceActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/URL_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Juno" />
+
+            <Button
+                android:layout_width="387dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:backgroundTint="#4F0B51"
+                android:gravity="center"
+                android:onClick="callWebserviceButtonHandler"
+                android:text="@string/getMovieDetails"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/result_textview"
+                style="@style/Widget.MaterialComponents.Snackbar.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="false"
+                android:text=""
+                android:textColor="#081F50"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/webServiceImage"
+                android:layout_width="320dp"
+                android:layout_height="498dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:layout_marginTop="20dp"
+
+                android:layout_marginBottom="20dp"
+                android:isScrollContainer="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>
