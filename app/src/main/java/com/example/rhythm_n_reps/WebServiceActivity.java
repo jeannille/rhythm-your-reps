@@ -51,7 +51,9 @@ public class WebServiceActivity extends AppCompatActivity {
 //            Log.i("---------------------------------------------- input test", queryString);
 //            String url = NetworkUtil.validInput("https://www.omdbapi.com/?apikey=21a5afff&s=Bridget+Jones");
             //append user's input as query to api that includes my API key
-            String url = NetworkUtil.validInput("https://www.omdbapi.com/?apikey=21a5afff&plot=full&&t=" + queryString);
+//            String url = NetworkUtil.validInput("https://www.omdbapi.com/?apikey=21a5afff&plot=full&&t=" + queryString);
+            //hardcoded exercise returns
+            String url = NetworkUtil.validInput("https://wger.de/api/v2/exerciseinfo/129");
             task.execute(url); //execute updated url w/ user's query appended
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -115,14 +117,16 @@ public class WebServiceActivity extends AppCompatActivity {
 
             //should use resourc strings instead of concatenating when setting text next time
             try {
-//                result_view.setText(jObject.getString("Search")); //for JSON array of results
-                String plot = jObject.getString("Plot").replace("\n", "");
-                String actors = jObject.getString("Actors").replace("\n", "");
-                result_view.setText("Title: " + jObject.getString("Title") + "\nPlot: "+ plot + "\nYear: " +
-                        jObject.getString("Year") + "\n"+ "Actors: " + actors);
+                result_view.setText(jObject.getString("name")); //for JSON array of results
+//                String plot = jObject.getString("Plot").replace("\n", "");
+//                String actors = jObject.getString("Actors").replace("\n", "");
+//                result_view.setText("Title: " + jObject.getString("Title") + "\nPlot: "+ plot + "\nYear: " +
+//                        jObject.getString("Year") + "\n"+ "Actors: " + actors);
 
                 //delete below if crash
-                String imgStr = jObject.getString("Poster");
+
+//                String imgStr = jObject.getString("Poster");
+                String imgStr = "https://wger.de/media/exercise-images/129/Standing-biceps-curl-2.png";
                 Picasso.get().load(imgStr).into(result_img);
 
 

@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Rhythm-n-Reps</string>
 
+    <string name="launchWebView"> Launch Web View pg.</string>
+    <string name="getMovieDetails">Get movie results</string>
+
+    <!--    sample from course recyclerView code-->
+    <string name="item_name">Item name</string>
+    <string name="item_description">Description</string>
+    <string name="description">This image acts as an icon.</string>
+
 
 </resources>

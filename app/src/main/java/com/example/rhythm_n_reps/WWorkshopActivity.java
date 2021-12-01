@@ -19,12 +19,14 @@ import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayer.Builder;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaParserExtractorAdapter;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ProgressiveMediaExtractor;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -37,6 +39,7 @@ import com.example.rhythm_n_reps.R;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 
 import java.io.File;
+import java.util.SimpleTimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,27 +51,36 @@ public class WWorkshopActivity extends AppCompatActivity {
     //queen
 //    String videoUrl = "https://drive.google.com/file/d/17Jd3GGGBrp8GWEAQW9C1Ti5xkQT5uLzQ/view?usp=sharing";
 
-    PlayerView playerView;
+    PlayerView pvMain;
     ExoPlayer player;
+//    RENDERER_COUNT = 1 //since you want to render simple audio
+//    minBufferMs = 1000
+//    minRebufferMs = 5000
+
 
     String videoUri = "https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wworkshop);
 
-        playerView = findViewById(R.id.video_view);
         player = new ExoPlayer.Builder(this).build();
-//        initializePlayer();
-        // Build the media item.
-        MediaItem mediaItem = MediaItem.fromUri(videoUri);
-// Set the media item to be played.
-        player.setMediaItem(mediaItem);
-// Prepare the player.
-        player.prepare();
-// Start the playback.
-        player.play();
+//        DataSource dataSource = new DefaultUriDataSource
+
+//        playerView = findViewById(R.id.video_view);
+////        player = new ExoPlayer.Builder(this).build();
+//
+////        initializePlayer();
+//        // Build the media item.
+//        MediaItem mediaItem = MediaItem.fromUri(videoUri);
+//// Set the media item to be played.
+//        player.setMediaItem(mediaItem);
+//// Prepare the player.
+//        player.prepare();
+//// Start the playback.
+//        player.play();
 
     }
 
@@ -117,8 +129,6 @@ public class WWorkshopActivity extends AppCompatActivity {
 //        release();
 //        super.onPause();
 //    }
-
-
 
 
 //    "In all cases the Looper of the thread from which the player must be

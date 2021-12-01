@@ -21,6 +21,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent workshopIntent = new Intent(this, WWorkshopActivity.class);
                 startActivity(workshopIntent);
                 break;
+                //button to open up web service - exercise
+            case R.id.activityWebService:
+                Intent webIntent = new Intent(this, WebServiceActivity.class);
+                startActivity(webIntent);
+                break;
+            case R.id.buttonToSessionLIst:
+                Intent listSessionIntent = new Intent(this, ListWorkoutSessionActivity.class);
+                startActivity(listSessionIntent);
+                break;
         }
     }
 
