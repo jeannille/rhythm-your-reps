@@ -35,7 +35,7 @@ public class RViewHolder extends RecyclerView.ViewHolder {
                         //in case onclick occurs before RecyclerView calculates position, ignore click
                         //only save position if it has been determined (doc)
 
-                        listener.onItemClick(position); //call onItemClick w calculated positon of click
+                        listener.onItemClick(position); //call onItemClick w calculated position of click
                     }
                 }
             }
