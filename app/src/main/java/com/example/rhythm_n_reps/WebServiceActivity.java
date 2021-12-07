@@ -2,6 +2,7 @@ package com.example.rhythm_n_reps;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -40,6 +42,11 @@ public class WebServiceActivity extends AppCompatActivity {
         mURLEditText = findViewById(R.id.URL_editText);
         mTitleTextView = findViewById(R.id.result_textview);
 
+    }
+
+    public void ShowGif(View view, String gifUrl) {
+        ImageView imageView = findViewById(R.id.imageView);
+        Glide.with(this).load(gifUrl).into(imageView);
     }
 
     //when user clicks on button, new Async task created, get url user has entered and execute it
@@ -127,7 +134,7 @@ public class WebServiceActivity extends AppCompatActivity {
         protected void onPostExecute(JSONObject jObject) {
             super.onPostExecute(jObject);
             TextView result_view = (TextView) findViewById(R.id.result_textview);
-            ImageView result_img = (ImageView) findViewById(R.id.webServiceImage);
+            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage);
 
             //should use resourc strings instead of concatenating when setting text next time
             try {
@@ -144,8 +151,14 @@ public class WebServiceActivity extends AppCompatActivity {
 //                Log.i("-------------GIF URL obtained----------------",imgStr);
                 //replace gif url with https in order to load
                 String imgStr = jObject.getString("gifUrl").replace("http", "https");
+                Picasso.get().load(imgStr).into(imageView); //works
 
-                Picasso.get().load(imgStr).into(result_img);
+
+//                Glide.with(this).load(imgStr).into(result_img);
+                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
+
+
+
 
 
             } catch (JSONException e) {
