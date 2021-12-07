@@ -28,7 +28,7 @@
                 android:backgroundTint="#4F0B51"
                 android:gravity="center"
                 android:onClick="callWebserviceButtonHandler"
-                android:text="Get Exercised details"
+                android:text="Get Exercise details"
                 android:textColor="#FFFFFF" />
 
             <TextView

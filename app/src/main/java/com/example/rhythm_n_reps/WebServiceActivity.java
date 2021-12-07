@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 
 //activity handles the user's input (from WebView), makes (HTTP) request to the web service
 // makes request and receives responses from the web service (third party api)
@@ -34,6 +35,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
     private EditText mURLEditText;
     private TextView mTitleTextView;
+    private ArrayList resultListExe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,14 @@ public class WebServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_service);
         mURLEditText = findViewById(R.id.URL_editText);
         mTitleTextView = findViewById(R.id.result_textview);
-
     }
 
-    public void ShowGif(View view, String gifUrl) {
+    /**
+     * Creates gif image from provided URl and displays to image view.
+     * @param view
+     * @param gifUrl
+     */
+    public void showGif(View view, String gifUrl) {
         ImageView imageView = findViewById(R.id.imageView);
         Glide.with(this).load(gifUrl).into(imageView);
     }
@@ -60,6 +66,8 @@ public class WebServiceActivity extends AppCompatActivity {
         String userInput = rawInput.trim().replaceAll(" +", " ");
         String queryString = userInput.replace(" ", "+");
         String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
+        //keep array of possible target, if user does not enter correct target, display options
+        //when user enters target, display with userInput as target in URL and return
         try {
 //            Log.i("---------------------------------------------- input test", queryString);
             //append user's input as query to api that includes my API key
@@ -67,13 +75,15 @@ public class WebServiceActivity extends AppCompatActivity {
             //hardcoded exercise returns
 //            String url = NetworkUtil.validInput("https://wger.de/api/v2/exerciseinfo/129");
             //returns array of results for exercises that focus on abs
-            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
+            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/" + queryString + "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
+            Log.i("USER INPUT-------------- after editing", queryString);
+//            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
             task.execute(url); //execute updated url w/ user's query appended
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-    //TO DO schema: bodyPart, equipment, gifurl, id (string), name, target
+    //TO DO schema: bodyPart, equipment, gifUrl, id (string), name, target
 
     private class PingWebServiceTask extends AsyncTask<String, Integer, JSONObject> {
         //asynctask off main thread
@@ -92,7 +102,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
             //initialize JSONObject to be returned
             JSONObject jObject = new JSONObject();
-            JSONArray jArray = new JSONArray();
+            JSONArray jArray = new JSONArray(); //placeholder for response array
             try {
 
                 URL url = new URL(params[0]);
@@ -107,7 +117,7 @@ public class WebServiceActivity extends AppCompatActivity {
                 jArray = new JSONArray(resp);
 //                JSONObject test = jArray.getJSONObject(0);
 
-                jObject = jArray.getJSONObject(2);
+                jObject = jArray.getJSONObject(0);
 
 //                System.out.print("SUCCESS woooo");
                 return jObject;
@@ -147,17 +157,16 @@ public class WebServiceActivity extends AppCompatActivity {
 
 
 //                String plot = jObject.getString("Plot").replace("\n", "");
-//                String actors = jObject.getString("Actors").replace("\n", "");
-//                Log.i("-------------GIF URL obtained----------------",imgStr);
+
                 //replace gif url with https in order to load
                 String imgStr = jObject.getString("gifUrl").replace("http", "https");
+                Log.i("-------------GIF URL obtained----------------",imgStr); //double check result
                 Picasso.get().load(imgStr).into(imageView); //works
-
 
 //                Glide.with(this).load(imgStr).into(result_img);
                 Glide.with(getApplicationContext()).load(imgStr).into(imageView);
 
-
+                Log.i("test", jObject.toString());
 
 
 

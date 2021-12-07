@@ -15,7 +15,7 @@ public class Exercise {
     private String target;
 
 
-
+//constructor Exercise onkect if given JSON object retrieved from API
     public Exercise(JSONObject jObject){
         try {
             this.bodyPart = jObject.getString("bodyPart");
