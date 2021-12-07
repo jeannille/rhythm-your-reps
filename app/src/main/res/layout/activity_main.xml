@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#009688"
     tools:context=".MainActivity">
 
     <TextView
@@ -19,42 +20,45 @@
 
     <Button
         android:id="@+id/workshopButton"
-        android:layout_width="271dp"
-        android:layout_height="48dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:backgroundTint="#009688"
         android:onClick="onClick"
         android:text="Workout Workshop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.147" />
 
     <Button
         android:id="@+id/activityWebService"
-        android:layout_width="267dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="93dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+
+        android:backgroundTint="#009688"
         android:onClick="onClick"
         android:text="button To Web Serv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/workshopButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.032" />
 
     <Button
         android:id="@+id/buttonToSessionLIst"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#009688"
         android:onClick="onClick"
         android:text="Workout Session List"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityWebService"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintVertical_bias="0.052" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
