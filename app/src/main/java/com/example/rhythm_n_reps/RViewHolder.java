@@ -6,13 +6,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
-
+// RecyclerView that 'holds' each ItemCard ('view') object
+//handles click events (click listeners for itemCard)
 public class RViewHolder extends RecyclerView.ViewHolder {
 
-    public ImageView itemIcon;
-    public TextView itemName;
+    public ImageView itemIcon; //image view of exercise, use Picasso
+    public TextView itemName; //description, name
     public TextView itemDesc;
-    public CheckBox checkBox;
+    public CheckBox checkBox; //add to workout
 
 
     // Constructor finds each field by id, MUST call super first
@@ -34,6 +35,7 @@ public class RViewHolder extends RecyclerView.ViewHolder {
                     if (position != RecyclerView.NO_POSITION) {
                         //in case onclick occurs before RecyclerView calculates position, ignore click
                         //only save position if it has been determined (doc)
+                        //
 
                         listener.onItemClick(position); //call onItemClick w calculated position of click
                     }
@@ -56,7 +58,4 @@ public class RViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-
-
-
 }

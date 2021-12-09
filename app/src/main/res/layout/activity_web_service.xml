@@ -8,27 +8,52 @@
     tools:context=".WebServiceActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/URL_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ENTER TEXT" />
+                android:text="abs" />
 
             <Button
+                android:id="@+id/searchByTargetButton"
                 android:layout_width="387dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_vertical"
                 android:backgroundTint="#4F0B51"
                 android:gravity="center"
                 android:onClick="callWebserviceButtonHandler"
-                android:text="Get Exercise details"
+                android:text="Search by target (ie. abs)"
+                android:textColor="#FFFFFF" />
+
+
+            <Button
+                android:id="@+id/searchByEquipButton"
+                android:layout_width="387dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:backgroundTint="#4F0B51"
+                android:gravity="center"
+                android:onClick="callWebserviceButtonHandler"
+                android:text="Search by Equipment (ie. Kettlebell)"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/searchByBodypartButton"
+                android:layout_width="387dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:backgroundTint="#4F0B51"
+                android:gravity="center"
+                android:onClick="callWebserviceButtonHandler"
+                android:text="Search by bodypart (ie. back)"
                 android:textColor="#FFFFFF" />
 
             <TextView
@@ -43,8 +68,8 @@
 
             <ImageView
                 android:id="@+id/webServiceImage"
-                android:layout_width="320dp"
-                android:layout_height="498dp"
+                android:layout_width="267dp"
+                android:layout_height="359dp"
                 android:layout_gravity="center|center_horizontal|center_vertical"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
@@ -52,8 +77,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-
 
 
 </LinearLayout>

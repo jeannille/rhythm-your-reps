@@ -33,6 +33,9 @@ public class WebServiceActivity extends AppCompatActivity {
 
     private static final String TAG = "WebServiceActivity";
 
+    //API key will be used for all exercise API access endpoints
+    private static final String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
+
     private EditText mURLEditText;
     private TextView mTitleTextView;
     private ArrayList resultListExe;
@@ -56,8 +59,6 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
     //when user clicks on button, new Async task created, get url user has entered and execute it
-    //api key - 2ee82f0cca6abd8fce24191c8174a521a04c1e7e
-    //switched api - exercisedb
     public void callWebserviceButtonHandler(View view) {
         PingWebServiceTask task = new PingWebServiceTask(); //extends asyncTask
         //get & save url user has entered in textbox, make sure its valid
@@ -65,20 +66,38 @@ public class WebServiceActivity extends AppCompatActivity {
         //remove leading & trailing spaces plus any multiple spacing then replaces spaces with + for query
         String userInput = rawInput.trim().replaceAll(" +", " ");
         String queryString = userInput.replace(" ", "+");
-        String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
+//        String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
         //keep array of possible target, if user does not enter correct target, display options
         //when user enters target, display with userInput as target in URL and return
         try {
 //            Log.i("---------------------------------------------- input test", queryString);
             //append user's input as query to api that includes my API key
-//            String url = NetworkUtil.validInput("https://www.omdbapi.com/?apikey=21a5afff&plot=full&&t=" + queryString);
             //hardcoded exercise returns
-//            String url = NetworkUtil.validInput("https://wger.de/api/v2/exerciseinfo/129");
-            //returns array of results for exercises that focus on abs
-            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/" + queryString + "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
-            Log.i("USER INPUT-------------- after editing", queryString);
+            //returns array of results for exercises that focus on whatever user has entered
+            //if button/view clicked is for target, use this URL endpoint
+            //TO DO: would probably better to offer the user a drop down for each category :/
+            //less room for error
+            switch (view.getId()) {
+                case R.id.searchByTargetButton:
+                    Log.i("R ID clicked on IS", "TARGET");
+                    String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/" + queryString + apiKeyEndPoint);
+                    task.execute(url);
+                    break;
+                case R.id.searchByBodypartButton:
+                    Log.i("R ID clicked on BODYPART", "BODY PART");
+                    String url2 = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/bodyPart/" + queryString + apiKeyEndPoint);
+                    task.execute(url2);
+                    break;
+                case R.id.searchByEquipButton:
+                    Log.i("R ID clicked on EQUIPMENT", "EQUIPMENT");
+                    String urlEquip = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/equipment/" + queryString + apiKeyEndPoint);
+                    task.execute(urlEquip);
+                    break;
+            }
+
+//            Log.i("USER INPUT-------------- after editing", queryString); // check expected format
 //            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
-            task.execute(url); //execute updated url w/ user's query appended
+
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -106,16 +125,17 @@ public class WebServiceActivity extends AppCompatActivity {
             try {
 
                 URL url = new URL(params[0]);
-                Log.i("--------current url to be parsed by NetworkUtil", url.toString());
+                Log.i("-------------------current url to be parsed by NetworkUtil", url.toString());
                 // Get String response from the url address
                 //NetworkUtil  creates HttpURLConnection obj & uses GET req method
                 //reads response using input stream & returns resp as String
                 String resp = NetworkUtil.httpResponse(url);
-                Log.i("String resp", resp);
+                Log.i("~~~~~~~~~~~String resp~~~~~~~~~~~~", resp);
 
                 //get first jsonObj from JSONArray
                 jArray = new JSONArray(resp);
 //                JSONObject test = jArray.getJSONObject(0);
+//                Log.i("DEC 9 - RESULTING array from query: \n", jArray.toString());
 
                 jObject = jArray.getJSONObject(0);
 
@@ -146,10 +166,9 @@ public class WebServiceActivity extends AppCompatActivity {
             TextView result_view = (TextView) findViewById(R.id.result_textview);
             ImageView imageView= (ImageView) findViewById(R.id.webServiceImage);
 
-            //should use resourc strings instead of concatenating when setting text next time
+            //should use resource strings instead of concatenating when setting text next time
             try {
                 //result_view.setText(jObject.toString()); //test full json returned
-
                 result_view.setText( "Exercise Name: " + jObject.getString("name") +
                         "\n" +"Body part: " + jObject.getString("bodyPart") + "\n" + "Target muscle(s): "
                         + jObject.getString("target") + "\n" + "Required Equipment: "
@@ -160,15 +179,14 @@ public class WebServiceActivity extends AppCompatActivity {
 
                 //replace gif url with https in order to load
                 String imgStr = jObject.getString("gifUrl").replace("http", "https");
-                Log.i("-------------GIF URL obtained----------------",imgStr); //double check result
+//                Log.i("-------------GIF URL obtained----------------",imgStr); //double check result
                 Picasso.get().load(imgStr).into(imageView); //works
 
 //                Glide.with(this).load(imgStr).into(result_img);
                 Glide.with(getApplicationContext()).load(imgStr).into(imageView);
 
-                Log.i("test", jObject.toString());
-
-
+                //get value of id for specific jsonObj, use this when user clicks on the exercise to add
+                Log.i("test", String.valueOf(jObject.get("id")));
 
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");

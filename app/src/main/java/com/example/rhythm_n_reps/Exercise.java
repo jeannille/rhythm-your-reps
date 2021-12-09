@@ -5,6 +5,9 @@ package com.example.rhythm_n_reps;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//CardView item within list of Exercises
+//each card view will contain ImageVIew (exercise gif), Text view (description), checkbox
+//to potentially add this particular exercise to a working session list
 public class Exercise {
 
     private String bodyPart;

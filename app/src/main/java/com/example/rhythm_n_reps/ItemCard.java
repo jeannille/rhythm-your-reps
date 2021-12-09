@@ -7,19 +7,6 @@ public class ItemCard implements ItemClickListener {
     private final String itemDesc;
     private boolean isChecked;
 
-    // click on actual Item Card (is the item currently selected)
-// click on actual check box WITHIN item card
-
-    @Override
-    public void onItemClick(int position) {
-        isChecked = !isChecked;
-    }
-
-    @Override
-    public void onCheckBoxClick(int position) {
-        isChecked = !isChecked;
-    }
-
     //Constructor
     //each item card has an icon, name, description and status if checked
     public ItemCard(int imageSource, String itemName, String itemDesc,boolean isChecked) {
@@ -44,6 +31,18 @@ public class ItemCard implements ItemClickListener {
 
     public boolean getStatus() {
         return isChecked;
+    }
+
+    // click on actual Item Card (is the item currently selected)
+    // click on actual check box WITHIN item card
+    @Override
+    public void onItemClick(int position) {
+        isChecked = !isChecked;
+    }
+
+    @Override
+    public void onCheckBoxClick(int position) {
+        isChecked = !isChecked;
     }
 
 

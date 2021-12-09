@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/empty.xml" value="0.15555555555555556" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.15555555555555556" />
-        <entry key="app/src/main/res/layout/activity_list_workout_session.xml" value="0.11930091185410334" />
+        <entry key="app/src/main/res/layout/activity_list_workout_session.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_web_service.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_wworkshop.xml" value="0.18177083333333333" />

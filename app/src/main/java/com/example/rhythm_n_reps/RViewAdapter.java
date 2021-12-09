@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+//Adapter acts as messenger between RViewHolder and the actual data (exercises)
+//that will be displayed
+
 public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
 
     //creates array list of item cards

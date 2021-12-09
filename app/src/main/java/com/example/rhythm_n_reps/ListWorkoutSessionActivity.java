@@ -14,7 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+//Here activity is creating / setting up a RecyclerView to work plus handling orientation (or any configration) changes
+//Main activity starts out with an Array List of ItemCard objects
 public class ListWorkoutSessionActivity extends AppCompatActivity {
 
     private ArrayList<ItemCard> itemList = new ArrayList<>();
@@ -51,7 +52,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
                 return false;
             }
 
-            //onSwiped, if item is swiped whichever directioon, then display Toast message & delete item from list
+            //onSwiped, if item is swiped whichever direction, then display Toast message & delete item from list
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 Toast.makeText(ListWorkoutSessionActivity.this, "Delete an item", Toast.LENGTH_SHORT).show();
@@ -113,6 +114,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
 
                 // Retrieve keys we stored in the instance
                 for (int i = 0; i < size; i++) {
+                    //maybe should be id number of exercise
                     Integer imgId = savedInstanceState.getInt(KEY_OF_INSTANCE + i + "0");
                     String itemName = savedInstanceState.getString(KEY_OF_INSTANCE + i + "1");
                     String itemDesc = savedInstanceState.getString(KEY_OF_INSTANCE + i + "2");
@@ -131,8 +133,12 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
         }
         // The first time to opne this Activity
         else {
-            ItemCard item1 = new ItemCard(R.drawable.push_up_down, "Gmail", "Example exercise", false);
+            ItemCard item1 = new ItemCard(R.drawable.pic_gmail_01, "Gmail", "Example description", false);
+            ItemCard item2 = new ItemCard(R.drawable.pic_google_01, "Google", "Example description", false);
+            ItemCard item3 = new ItemCard(R.drawable.pic_youtube_01, "Youtube", "Example description", false);
             itemList.add(item1);
+            itemList.add(item2);
+            itemList.add(item3);
 
         }
 
