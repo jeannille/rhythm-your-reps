@@ -57,10 +57,10 @@ public class NetworkUtil {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         //method of request is GET
         conn.setRequestMethod("GET");
-        //DoInput means retrieveing from server where output would outputting to server
+        //DoInput means retrieving from server where output would outputting to server
         conn.setDoInput(true);
 
-        //tell connection to connection
+        //tell connection to connect
         conn.connect();
 
         // Read response.

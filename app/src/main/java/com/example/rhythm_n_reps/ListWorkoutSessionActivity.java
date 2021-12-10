@@ -5,19 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
+import android.provider.MediaStore.Images.Media;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import com.squareup.picasso.Picasso;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Random;
-//Here activity is creating / setting up a RecyclerView to work plus handling orientation (or any configration) changes
-//Main activity starts out with an Array List of ItemCard objects
+
+// Activity creates and sets up RecyclerView (ViewGroup) containing ItemCard Views
+//Makes sure functionality works + handling orientation (any configuration) changes
 public class ListWorkoutSessionActivity extends AppCompatActivity {
 
+    //Adapter provides array list of ItemCard View objects
     private ArrayList<ItemCard> itemList = new ArrayList<>();
 
     private RecyclerView recyclerView;
@@ -33,14 +36,14 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_workout_session);
 
-        init(savedInstanceState); // call our initialize savedInstanceState
+        init(savedInstanceState); // call our initialized savedInstanceState
 
-        addButton = findViewById(R.id.addButton); //find floating action button and add click listener to it
+        addButton = findViewById(R.id.addButton); //find/save floating action button & set clickListener below
         addButton.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
                                              int pos = 0;
-                                             addItem(pos); //floating button (v) gets added to position 0 of our list (6:20)
+                                             addItem(pos); //floating button adds item to position 0 of our list
                                          }
                                      }
         );
@@ -55,29 +58,31 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
             //onSwiped, if item is swiped whichever direction, then display Toast message & delete item from list
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Toast.makeText(ListWorkoutSessionActivity.this, "Delete an item", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListWorkoutSessionActivity.this, "DELETE ITEM", Toast.LENGTH_SHORT).show();
                 int position = viewHolder.getLayoutPosition(); //which item is being swiped
                 itemList.remove(position);
 
-                rviewAdapter.notifyItemRemoved(position); //just removes one item, simple example
+                rviewAdapter.notifyItemRemoved(position); //simply notify that item is removed
+                //can use notifyDatasetChange - recalculate everything, better for more complicated items/list
 
             }
         });
-        itemTouchHelper.attachToRecyclerView(recyclerView); //then attach the touch helper we set up to the recyclerView
+        itemTouchHelper.attachToRecyclerView(recyclerView); //after setup, attach the ItemTouchHelper to the RecyclerView
 
     }
 
-    //could also use 'notifyDataChange', which is update, recalculates everything (8:00), better for more complicated examples
+    //could also use 'notifyDatasetChange', which is update, recalculates everything, better for more complicated examples
     //but this example does not have to do heavy calculating since only removing one item
 
 
-    // Handling Orientation Changes on Android
+    // Handling Orientation Changes on Android (any configuration changes)
+    //Attaches key-value pairs to the Bundle that is passed
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-
+        //bundle, contains actual data to be updated, updates outState
 
         int size = itemList == null ? 0 : itemList.size();
-        outState.putInt(NUMBER_OF_ITEMS, size);
+        outState.putInt(NUMBER_OF_ITEMS, size); //set bundle's NUMBER_OF_ITEMS from list size (JSON ARRAY)
 
         // Need to generate unique key for each item
         // This is only a possible way to do, please find your own way to generate the key
@@ -97,20 +102,21 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
     }
 
 
-    // init our savedInstanceState - for configuration changes eg. rotation change...
+    // initialize our savedInstanceState - for configuration changes eg. rotation change...
+    //called in onCreate here, main RView activity
     private void init(Bundle savedInstanceState) {
 
-        initialItemData(savedInstanceState); //get the three pieces of data
-        createRecyclerView();
+        initialItemData(savedInstanceState); //get the three pieces of data (bundle)
+        createRecyclerView(); //sets/links everything up for RView - RViewHolder, Adapter & ItemCard
     }
 
     private void initialItemData(Bundle savedInstanceState) {
 
-        // if Not the first time to open this Activity
+        // if Not the first time to open this Activity, then create the defaulted items
         if (savedInstanceState != null && savedInstanceState.containsKey(NUMBER_OF_ITEMS)) {
             if (itemList == null || itemList.size() == 0) {
 
-                int size = savedInstanceState.getInt(NUMBER_OF_ITEMS);
+                int size = savedInstanceState.getInt(NUMBER_OF_ITEMS); //set how many items will be listed
 
                 // Retrieve keys we stored in the instance
                 for (int i = 0; i < size; i++) {
@@ -125,17 +131,20 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
                     if (isChecked) {
                         itemName = itemName.substring(0, itemName.lastIndexOf("("));
                     }
-                    ItemCard itemCard = new ItemCard(imgId, itemName, itemDesc, isChecked);
 
+                    //create ItemCard using values and add to existing arrayList of ItemCards
+                    ItemCard itemCard = new ItemCard(imgId, itemName, itemDesc, isChecked);
                     itemList.add(itemCard);
                 }
             }
         }
-        // The first time to opne this Activity
+        // The first time to open this Activity, add default items
         else {
+//            ImageView itemIcon = itemView.findViewById(R.id.item_icon);
             ItemCard item1 = new ItemCard(R.drawable.pic_gmail_01, "Gmail", "Example description", false);
             ItemCard item2 = new ItemCard(R.drawable.pic_google_01, "Google", "Example description", false);
-            ItemCard item3 = new ItemCard(R.drawable.pic_youtube_01, "Youtube", "Example description", false);
+            ItemCard item3 = new ItemCard(R.drawable.cable_pulldown, "Push Up", "Body part: Chest", false);
+//            ItemCard item3 = new ItemCard( new Media(new URI("http://d205bpvrqc9yn1.cloudfront.net/0007.gif"),  "test", "false");
             itemList.add(item1);
             itemList.add(item2);
             itemList.add(item3);
@@ -148,46 +157,49 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
     //set click listeners, set adapter
     private void createRecyclerView() {
 
+        rLayoutManger = new LinearLayoutManager(this); //create LinearLayout for RView
 
-        rLayoutManger = new LinearLayoutManager(this);
-
-        recyclerView = findViewById(R.id.recycler_view); //get recyclerView and set it to have fixed size (11:30)
+        recyclerView = findViewById(R.id.recycler_view); //get recyclerView from resource (xml) and set as fixed size
         recyclerView.setHasFixedSize(true);
-        //items are all fixed size helps recyclerView not worry about recalculating sizes, thus much faster
+        //all items are fixed size, much faster - helps recyclerView not worry about recalculating sizes
 
-        rviewAdapter = new RViewAdapter(itemList);
+        rviewAdapter = new RViewAdapter(itemList); //initialize rViewAdapter given array list of items
+
+        //Initialize / set up the ItemClickListeners for both clicks
         ItemClickListener itemClickListener = new ItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 //attributions bond to the item has been changed
-                itemList.get(position).onItemClick(position);
+                itemList.get(position).onItemClick(position); //get the item based off of position & call onItemClick given that position
 
-                rviewAdapter.notifyItemChanged(position);
+                rviewAdapter.notifyItemChanged(position); //notify adapter items have changed
             }
 
             @Override
             public void onCheckBoxClick(int position) {
                 //attributions bond to the item has been changed
-                itemList.get(position).onCheckBoxClick(position);
+                itemList.get(position).onCheckBoxClick(position); //get the item based off of position & call onCheckBoxClick given that position
 
                 rviewAdapter.notifyItemChanged(position);
             }
         };
+        //after callbacks are set, set the initialized itemClickListener for rViewAdapter instance
         rviewAdapter.setOnItemClickListener(itemClickListener);
 
-        recyclerView.setAdapter(rviewAdapter);
-        recyclerView.setLayoutManager(rLayoutManger);
-
+        recyclerView.setAdapter(rviewAdapter); //set this adapter for RecyclerView
+        recyclerView.setLayoutManager(rLayoutManger); //set layoutManager for RecyclerView
 
     }
 
-    //
+    //Add a new (generic info for now) item to the full itemList (no logo,
     private void addItem(int position) {
         //add temp fake image, but this should be an exercise image... taken from json obj
-        itemList.add(position, new ItemCard(R.drawable.ic_android_black_24dp, "No Logo item", "Item id: " + Math.abs(new Random().nextInt(100000)), false));
+        itemList.add(position, new ItemCard(R.drawable.ic_android_black_24dp, "No Logo item", "Item id: "
+                + Math.abs(new Random().nextInt(100000)), false));
         Toast.makeText(ListWorkoutSessionActivity.this, "Add an item", Toast.LENGTH_SHORT).show();
 
-        rviewAdapter.notifyItemInserted(position); //notify new item inserted, thus notifying adapter everything must be recalculated
+
+        rviewAdapter.notifyItemInserted(position); //notify adapter new item was inserted, so everything gets recalculated
     }
 
 

@@ -2,6 +2,10 @@ package com.example.rhythm_n_reps;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,15 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -104,7 +107,25 @@ public class WebServiceActivity extends AppCompatActivity {
     }
     //TO DO schema: bodyPart, equipment, gifUrl, id (string), name, target
 
-    private class PingWebServiceTask extends AsyncTask<String, Integer, JSONObject> {
+    public ItemCard testJSONToItemCard (JSONObject jObject){
+        ItemCard exercise = null; //placeholder for try and catch
+        //test intent to add to RView instead, JSONArray
+        //or function to make one JSON obj from array into item card for now w/ just name & gif
+        //getDesc is gifurl for now
+        try {
+            String gif = jObject.getString("gifUrl").replace("http", "https");
+            exercise = new ItemCard( Integer.parseInt( jObject.getString("id")), jObject.getString("name"), gif,
+            false);
+
+        }
+        catch (JSONException e) {
+            Log.i("ERROR trying to create obj", "Something went wronggggg");
+//            result_view.setText("Something went wrong!");
+        }
+        return exercise;
+    }
+
+    private class PingWebServiceTask extends AsyncTask<String, Integer, JSONArray> {
         //asynctask off main thread
 
         @Override
@@ -114,33 +135,38 @@ public class WebServiceActivity extends AppCompatActivity {
 
         //takes in String params are the parameters from what the user has entered
         @Override
-        protected JSONObject doInBackground(String... params) {
+        protected JSONArray doInBackground(String... params) {
 
             //passing back result, pass back two strings as part of an array
-//            JSONObject result = null;
+            ItemCard test = null;
 
             //initialize JSONObject to be returned
-            JSONObject jObject = new JSONObject();
+//            JSONObject jObject = new JSONObject();
             JSONArray jArray = new JSONArray(); //placeholder for response array
             try {
 
-                URL url = new URL(params[0]);
+                URL url = new URL(params[0]); //String params of argument, just url first item
                 Log.i("-------------------current url to be parsed by NetworkUtil", url.toString());
                 // Get String response from the url address
                 //NetworkUtil  creates HttpURLConnection obj & uses GET req method
                 //reads response using input stream & returns resp as String
-                String resp = NetworkUtil.httpResponse(url);
-                Log.i("~~~~~~~~~~~String resp~~~~~~~~~~~~", resp);
+                String resp = NetworkUtil.httpResponse(url); // full json array of results as a string given the endpoint
+                Log.i("~~~~~~~~~~~~~~~~~~~~~~String resp of networkUtil.httpResponse(url)~~~~~~~~~~~~", resp);
 
                 //get first jsonObj from JSONArray
                 jArray = new JSONArray(resp);
-//                JSONObject test = jArray.getJSONObject(0);
-//                Log.i("DEC 9 - RESULTING array from query: \n", jArray.toString());
+//                Integer arrLen = jArray.length();
 
-                jObject = jArray.getJSONObject(0);
+//                Log.i("DEC 9 - RESULTING array from query: \n", jArray.toString(3));
+//                Log.i("length of array -------", arrLen.toString());
+
+//                jObject = jArray.getJSONObject(0);
+//                test = testJSONToItemCard(jObject);
+//                Integer blah = test.getImageSource();
+//                Log.i("TESTING IF JSON is ITEMCARD now ---------", blah.toString()); //obj not array
 
 //                System.out.print("SUCCESS woooo");
-                return jObject;
+                return jArray;
 
 
             } catch (MalformedURLException e) {
@@ -157,42 +183,62 @@ public class WebServiceActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return jObject;
+            return jArray;
         }
 
         @Override
-        protected void onPostExecute(JSONObject jObject) {
-            super.onPostExecute(jObject);
+        protected void onPostExecute(JSONArray jArray) {
+            super.onPostExecute(jArray);
             TextView result_view = (TextView) findViewById(R.id.result_textview);
             ImageView imageView= (ImageView) findViewById(R.id.webServiceImage);
+            ArrayList itemList = new ArrayList<>();
 
             //should use resource strings instead of concatenating when setting text next time
             try {
-                //result_view.setText(jObject.toString()); //test full json returned
-                result_view.setText( "Exercise Name: " + jObject.getString("name") +
-                        "\n" +"Body part: " + jObject.getString("bodyPart") + "\n" + "Target muscle(s): "
-                        + jObject.getString("target") + "\n" + "Required Equipment: "
-                + jObject.getString("equipment")); //for JSON array of results
+////                result_view.setText(jObject.toString()); //test full json returned
+//                result_view.setText( "Exercise Name: " + jObject.getString("name") +
+//                        "\n" +"Body part: " + jObject.getString("bodyPart") + "\n" + "Target muscle(s): "
+//                        + jObject.getString("target") + "\n" + "Required Equipment: "
+//                + jObject.getString("equipment") + "\n" ); //for JSON array of results
+//
+//                result_view.setText(jArray.getJSONObject(0).getString("name")); // 3/4 abs
+                //create ArrayList of JSONObjects for
 
-
-//                String plot = jObject.getString("Plot").replace("\n", "");
+                for(int i = 0; i< jArray.length(); i++){
+                    itemList.add(jArray.getJSONObject(i));
+                }
+                Log.i("------------------------ itemList!!!!", itemList.toString());
+                result_view.setText(itemList.get(3).toString());
 
                 //replace gif url with https in order to load
-                String imgStr = jObject.getString("gifUrl").replace("http", "https");
+                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
 //                Log.i("-------------GIF URL obtained----------------",imgStr); //double check result
-                Picasso.get().load(imgStr).into(imageView); //works
+//                Picasso.get().load(imgStr).into(imageView); //works
 
 //                Glide.with(this).load(imgStr).into(result_img);
                 Glide.with(getApplicationContext()).load(imgStr).into(imageView);
 
                 //get value of id for specific jsonObj, use this when user clicks on the exercise to add
-                Log.i("test", String.valueOf(jObject.get("id")));
+//                Log.i("test", String.valueOf(jObject.get("id"))); //{id}
 
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");
             }
 
         }
+    }
+
+    //tester method for keeping gif as drawable, stackoverflow question on getting from URL path
+    //should return drawable
+    public static Drawable drawableFromUrl(String url) throws IOException {
+        Bitmap x;
+
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(Resources.getSystem(), x);
     }
 
 

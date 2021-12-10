@@ -8,7 +8,7 @@ import org.json.JSONObject;
 //CardView item within list of Exercises
 //each card view will contain ImageVIew (exercise gif), Text view (description), checkbox
 //to potentially add this particular exercise to a working session list
-public class Exercise {
+public class ExerciseCard {
 
     private String bodyPart;
     private String equipment;
@@ -19,7 +19,7 @@ public class Exercise {
 
 
 //constructor Exercise onkect if given JSON object retrieved from API
-    public Exercise(JSONObject jObject){
+    public ExerciseCard(JSONObject jObject){
         try {
             this.bodyPart = jObject.getString("bodyPart");
             this.equipment = jObject.getString("equipment");
@@ -33,7 +33,7 @@ public class Exercise {
 
     }
 
-    public Exercise(String bodyPart, String equipment, String gifUrl, String id, String name, String target) {
+    public ExerciseCard(String bodyPart, String equipment, String gifUrl, String id, String name, String target) {
         this.bodyPart = bodyPart;
         this.equipment = equipment;
         this.gifUrl = gifUrl;
@@ -89,6 +89,16 @@ public class Exercise {
     public void setTarget(String target) {
         this.target = target;
     }
+
+//    @Override
+//    public void onItemClick(int position) {
+//
+//    }
+//
+//    @Override
+//    public void onCheckBoxClick(int position) {
+//
+//    }
 
     //create overide toString to display the exercise json obj nicely
 }

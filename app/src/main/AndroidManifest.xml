@@ -16,13 +16,16 @@
         android:theme="@style/Theme.RhythmnReps">
         <activity
             android:name=".ListWorkoutSessionActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".WebServiceActivity"
             android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".WWorkshopActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
