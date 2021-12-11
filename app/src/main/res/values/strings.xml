@@ -9,5 +9,19 @@
     <string name="item_description">Description</string>
     <string name="description">This image acts as an icon.</string>
 
+<!--categories to search exerciseDB API - will need for endpoints-->
+    <string-array name="bodyPart_array">
+        <item>back</item>
+        <item>cardio</item>
+        <item>chest</item>
+        <item>lower arms</item>
+        <item>lower legs</item>
+        <item>neck</item>
+        <item>shoulders</item>
+        <item>upper arms</item>
+        <item>upper legs</item>
+        <item>waist</item>
+    </string-array>
+
 
 </resources>

@@ -1,7 +1,10 @@
 package com.example.rhythm_n_reps;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,8 +13,10 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
@@ -42,14 +47,45 @@ public class WebServiceActivity extends AppCompatActivity {
     private EditText mURLEditText;
     private TextView mTitleTextView;
     private ArrayList resultListExe;
+    private Button mExerciseByTarget;
+
+    private RecyclerView courseRV;
+//    private JSONArray recyclerDataArrayList;
+    private ArrayList<ExerciseRecyclerData> recyclerDataArrayList;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_service);
-        mURLEditText = findViewById(R.id.URL_editText);
-        mTitleTextView = findViewById(R.id.result_textview);
+//        mURLEditText = findViewById(R.id.URL_editText);
+//        mTitleTextView = findViewById(R.id.result_textview);
+
+        // initializing our variables.
+        courseRV = findViewById(R.id.idRVCourse);
+        progressBar = findViewById(R.id.idPBLoading);
+
+        // creating new array list.
+        recyclerDataArrayList = new ArrayList<>();
+
+        callWebserviceButtonHandler();
+
+
     }
+
+//    //send over results data to obj (maybe string is json array)
+//    //call when the target button (view based here) clicked
+//    public void sendData(ArrayList aList){
+//
+//        Intent i = new Intent(this, ListViewResults.class);
+////        i.putParcelableArrayListExtra("jArray", aList);
+//        i.putExtra("jArray", aList);
+//        startActivity(i);
+//        //since target button is linked to webCallService, maybe make splash screen
+//        //to send data
+//
+//    }
 
     /**
      * Creates gif image from provided URl and displays to image view.
@@ -62,24 +98,23 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
     //when user clicks on button, new Async task created, get url user has entered and execute it
-    public void callWebserviceButtonHandler(View view) {
+    public void callWebserviceButtonHandler() {
         PingWebServiceTask task = new PingWebServiceTask(); //extends asyncTask
-        //get & save url user has entered in textbox, make sure its valid
-        String rawInput = mURLEditText.getText().toString();
-        //remove leading & trailing spaces plus any multiple spacing then replaces spaces with + for query
-        String userInput = rawInput.trim().replaceAll(" +", " ");
-        String queryString = userInput.replace(" ", "+");
-//        String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
-        //keep array of possible target, if user does not enter correct target, display options
+//        //get & save url user has entered in textbox, make sure its valid
+//        String rawInput = mURLEditText.getText().toString();
+//        //remove leading & trailing spaces plus any multiple spacing then replaces spaces with + for query
+//        String userInput = rawInput.trim().replaceAll(" +", " ");
+//        String queryString = userInput.replace(" ", "+");
+        //will change to display options for user (target, bodyPart, and equipment) display options
         //when user enters target, display with userInput as target in URL and return
         try {
-//            Log.i("---------------------------------------------- input test", queryString);
             //append user's input as query to api that includes my API key
             //hardcoded exercise returns
             //returns array of results for exercises that focus on whatever user has entered
             //if button/view clicked is for target, use this URL endpoint
-            //TO DO: would probably better to offer the user a drop down for each category :/
-            //less room for error
+
+
+/*
             switch (view.getId()) {
                 case R.id.searchByTargetButton:
                     Log.i("R ID clicked on IS", "TARGET");
@@ -98,24 +133,29 @@ public class WebServiceActivity extends AppCompatActivity {
                     break;
             }
 
-//            Log.i("USER INPUT-------------- after editing", queryString); // check expected format
-//            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
+ */
+
+            Log.i("R ID clicked on IS", "TARGET");
+            // TESTING DEC 10 - returns JSON ARRAY OF ABS exercises
+            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
+//            String url2 = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/bodyPart/" + queryString + apiKeyEndPoint);
+            task.execute(url);
 
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-    //TO DO schema: bodyPart, equipment, gifUrl, id (string), name, target
 
-    public ItemCard testJSONToItemCard (JSONObject jObject){
-        ItemCard exercise = null; //placeholder for try and catch
+    public ExerciseRecyclerData jsonToRData (JSONObject jObject){
+        ExerciseRecyclerData exercise = null; //placeholder for try and catch
         //test intent to add to RView instead, JSONArray
         //or function to make one JSON obj from array into item card for now w/ just name & gif
         //getDesc is gifurl for now
         try {
+            //gif only displays when protocol in url is 'https' not 'http' like the raw data url
             String gif = jObject.getString("gifUrl").replace("http", "https");
-            exercise = new ItemCard( Integer.parseInt( jObject.getString("id")), jObject.getString("name"), gif,
-            false);
+            exercise = new ExerciseRecyclerData(jObject);
+//            exercise = new ItemCard( Integer.parseInt( jObject.getString("id")), jObject.getString("name"), gif, false);
 
         }
         catch (JSONException e) {
@@ -126,7 +166,7 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
     private class PingWebServiceTask extends AsyncTask<String, Integer, JSONArray> {
-        //asynctask off main thread
+        //Asynctask off main thread
 
         @Override
         protected void onProgressUpdate(Integer... values) {
@@ -137,11 +177,7 @@ public class WebServiceActivity extends AppCompatActivity {
         @Override
         protected JSONArray doInBackground(String... params) {
 
-            //passing back result, pass back two strings as part of an array
-            ItemCard test = null;
-
-            //initialize JSONObject to be returned
-//            JSONObject jObject = new JSONObject();
+            //initialize JSONArray to be returned
             JSONArray jArray = new JSONArray(); //placeholder for response array
             try {
 
@@ -161,12 +197,9 @@ public class WebServiceActivity extends AppCompatActivity {
 //                Log.i("length of array -------", arrLen.toString());
 
 //                jObject = jArray.getJSONObject(0);
-//                test = testJSONToItemCard(jObject);
-//                Integer blah = test.getImageSource();
 //                Log.i("TESTING IF JSON is ITEMCARD now ---------", blah.toString()); //obj not array
 
-//                System.out.print("SUCCESS woooo");
-                return jArray;
+                return jArray; //json array of abs excerises
 
 
             } catch (MalformedURLException e) {
@@ -189,9 +222,11 @@ public class WebServiceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jArray) {
             super.onPostExecute(jArray);
-            TextView result_view = (TextView) findViewById(R.id.result_textview);
-            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage);
+            TextView result_view = (TextView) findViewById(R.id.result_LISTVIEW);
+//            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage);
+
             ArrayList itemList = new ArrayList<>();
+
 
             //should use resource strings instead of concatenating when setting text next time
             try {
@@ -204,22 +239,64 @@ public class WebServiceActivity extends AppCompatActivity {
 //                result_view.setText(jArray.getJSONObject(0).getString("name")); // 3/4 abs
                 //create ArrayList of JSONObjects for
 
+                //open new intent, and send array from service
                 for(int i = 0; i< jArray.length(); i++){
-                    itemList.add(jArray.getJSONObject(i));
+                    //'traverse' jArray by length, convert to Exe obj. and store as ArrayList to pass
+                    ExerciseRecyclerData e = new ExerciseRecyclerData(jArray.getJSONObject(i));
+                    recyclerDataArrayList.add(e);
                 }
-                Log.i("------------------------ itemList!!!!", itemList.toString());
-                result_view.setText(itemList.get(3).toString());
+
+                for (ExerciseRecyclerData i : recyclerDataArrayList) {
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
+
+                    // below line is to set layout manager for our recycler view.
+                    LinearLayoutManager manager = new LinearLayoutManager(WebServiceActivity.this);
+
+                    // setting layout manager for our recycler view.
+                    courseRV.setLayoutManager(manager);
+
+                    // below line is to set adapter to our recycler view.
+                    courseRV.setAdapter(recyclerViewAdapter);
+
+                }
+                ;
+
+                // below line we are running a loop to add data to our adapter class.
+                for (int i = 0; i < recyclerDataArrayList.size(); i++){
+
+                    recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
+
+                    // below line is to set layout manager for our recycler view.
+                    LinearLayoutManager manager = new LinearLayoutManager(WebServiceActivity.this);
+
+                    // setting layout manager for our recycler view.
+                    courseRV.setLayoutManager(manager);
+
+                    // below line is to set adapter to our recycler view.
+                    courseRV.setAdapter(recyclerViewAdapter);
+
+                }
+
+
+
+//                result_view.setText(itemList.get(3).toString()); //get position 3 exercise from results for now
+
+
+                //testing that concersion to E object worked as expected, yayyyy
+//                ExerciseRecyclerData test = (ExerciseRecyclerData) itemList.get(3);
+//                result_view.setText(test.getName());
 
                 //replace gif url with https in order to load
-                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
-//                Log.i("-------------GIF URL obtained----------------",imgStr); //double check result
-//                Picasso.get().load(imgStr).into(imageView); //works
+//                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
+//                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
 
-//                Glide.with(this).load(imgStr).into(result_img);
-                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
+//                Picasso.get().load(imgStr).into(imageView); //works for still image, may be good for icon view
 
-                //get value of id for specific jsonObj, use this when user clicks on the exercise to add
-//                Log.i("test", String.valueOf(jObject.get("id"))); //{id}
+//                result_view.setText("did not get error-------- after getting jsonArray");
+//                sendData(itemList);
+
+
 
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");

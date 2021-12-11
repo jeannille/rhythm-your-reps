@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent listSessionIntent = new Intent(this, ListWorkoutSessionActivity.class);
                 startActivity(listSessionIntent);
                 break;
+
+            //testing
+            case R.id.chooseCategoryActivity:
+                Intent spinnersIntent = new Intent(this, ChooseCategoryActivity.class);
+                startActivity(spinnersIntent);
         }
     }
 

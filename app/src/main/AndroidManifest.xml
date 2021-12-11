@@ -15,18 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RhythmnReps">
         <activity
-            android:name=".ListWorkoutSessionActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".ChooseCategoryActivity"
             android:exported="true" />
+        <activity
+            android:name=".ListViewResults"
+            android:exported="true" />
+        <activity
+            android:name=".ListWorkoutSessionActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".WebServiceActivity"
-            android:screenOrientation="portrait"
+            android:exported="true"
             android:parentActivityName=".MainActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".WWorkshopActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

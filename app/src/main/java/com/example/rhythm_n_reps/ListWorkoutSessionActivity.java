@@ -29,7 +29,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
 
     private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
-    private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
+    private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS"; //length of jason array
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
 
 
     // Handling Orientation Changes on Android (any configuration changes)
+    //preaping the bundle to keep track of (object data)
     //Attaches key-value pairs to the Bundle that is passed
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -106,10 +107,11 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
     //called in onCreate here, main RView activity
     private void init(Bundle savedInstanceState) {
 
-        initialItemData(savedInstanceState); //get the three pieces of data (bundle)
+        initialItemData(savedInstanceState); //get the three pieces of data (that are bundled)
         createRecyclerView(); //sets/links everything up for RView - RViewHolder, Adapter & ItemCard
     }
 
+    //don't have to use this as we're getting data from API
     private void initialItemData(Bundle savedInstanceState) {
 
         // if Not the first time to open this Activity, then create the defaulted items

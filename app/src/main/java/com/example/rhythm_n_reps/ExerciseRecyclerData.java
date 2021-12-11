@@ -8,8 +8,9 @@ import org.json.JSONObject;
 //CardView item within list of Exercises
 //each card view will contain ImageVIew (exercise gif), Text view (description), checkbox
 //to potentially add this particular exercise to a working session list
-public class ExerciseCard {
-
+public class ExerciseRecyclerData {
+    // variable names are the same as values we get from key value from json file
+    // "must be similar to that of key value which we are getting from our json file"
     private String bodyPart;
     private String equipment;
     private String gifUrl;
@@ -19,7 +20,7 @@ public class ExerciseCard {
 
 
 //constructor Exercise onkect if given JSON object retrieved from API
-    public ExerciseCard(JSONObject jObject){
+    public ExerciseRecyclerData(JSONObject jObject){
         try {
             this.bodyPart = jObject.getString("bodyPart");
             this.equipment = jObject.getString("equipment");
@@ -33,7 +34,7 @@ public class ExerciseCard {
 
     }
 
-    public ExerciseCard(String bodyPart, String equipment, String gifUrl, String id, String name, String target) {
+    public ExerciseRecyclerData(String bodyPart, String equipment, String gifUrl, String id, String name, String target) {
         this.bodyPart = bodyPart;
         this.equipment = equipment;
         this.gifUrl = gifUrl;
@@ -59,6 +60,9 @@ public class ExerciseCard {
     }
 
     public String getGifUrl() {
+        //ensure https so image displays
+        this.gifUrl = gifUrl.replace("http", "https");
+// gif url fixed when sending JSON obj as Exe. objs
         return gifUrl;
     }
 

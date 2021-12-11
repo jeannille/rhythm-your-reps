@@ -61,4 +61,18 @@
         app:layout_constraintTop_toBottomOf="@+id/activityWebService"
         app:layout_constraintVertical_bias="0.052" />
 
+    <Button
+        android:id="@+id/chooseCategoryActivity"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#009688"
+        android:onClick="onClick"
+        android:text="Browse Exercises"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonToSessionLIst"
+        app:layout_constraintVertical_bias="0.063" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
