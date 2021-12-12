@@ -10,15 +10,15 @@
     tools:context=".WebServiceActivity">
 
 
-    <!--progress bar for loading indicator-->
+    <!--progress bar for loading indicator on screen-->
     <ProgressBar
-        android:id="@+id/idPBLoading"
+        android:id="@+id/idProgBarWebS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
     <TextView
-        android:id="@+id/result_LISTVIEW"
+        android:id="@+id/topOfResultsPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="4sp"
@@ -30,7 +30,7 @@
     <!--creating a recycler view for displaying
         our list of courses-->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVCourse"
+        android:id="@+id/idRecyclerViewWebS"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

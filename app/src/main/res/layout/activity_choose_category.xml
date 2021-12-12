@@ -6,30 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".ChooseCategoryActivity">
 
+    <!--    android:entries="@array/bodyPart_array"-->
+
+    <Spinner
+        android:id="@+id/target_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.117" />
+
+
+    <Button
+        android:id="@+id/selectTargetSearchButton"
+        android:layout_width="252dp"
+        android:layout_height="59dp"
+        android:backgroundTint="#4B6CAE"
+        android:text="Search by Target"
+        app:layout_constraintBottom_toTopOf="@+id/bodyPart_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/target_spinner" />
+
+
+    <Button
+        android:id="@+id/selectBodyPartSearchButton"
+        android:layout_width="252dp"
+        android:layout_height="59dp"
+        android:backgroundTint="#4B6CAE"
+        android:text="Search by bodyPart"
+        app:layout_constraintBottom_toTopOf="@+id/equipment_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bodyPart_spinner" />
 
     <Spinner
         android:id="@+id/bodyPart_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/bodyPart_array"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072" />
+        app:layout_constraintVertical_bias="0.362" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="252dp"
-        android:layout_height="59dp"
-        android:backgroundTint="#994BAE"
-        android:text="Search by selection"
+
+    <Spinner
+        android:id="@+id/equipment_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bodyPart_spinner"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.578" />
+
+    <Button
+        android:id="@+id/selectEquipSearchButton"
+        android:layout_width="252dp"
+        android:layout_height="59dp"
+        android:backgroundTint="#4B6CAE"
+        android:text="Search by Equipment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/equipment_spinner"
+        app:layout_constraintVertical_bias="0.15" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

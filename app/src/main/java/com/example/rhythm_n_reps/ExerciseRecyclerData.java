@@ -62,7 +62,6 @@ public class ExerciseRecyclerData {
     public String getGifUrl() {
         //ensure https so image displays
         this.gifUrl = gifUrl.replace("http", "https");
-// gif url fixed when sending JSON obj as Exe. objs
         return gifUrl;
     }
 

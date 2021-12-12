@@ -25,11 +25,7 @@ public class RViewHolder extends RecyclerView.ViewHolder {
         itemName = itemView.findViewById(R.id.item_name);
         itemDesc = itemView.findViewById(R.id.item_desc);
         checkBox = itemView.findViewById(R.id.checkbox);
-
-
         //below, set on click listener for itemViews
-
-
 
         //both itemView listeners do the same thing ('checked'), may separate the ITEM click event
         // vs. checkbox (is useful in case you want them to do different things if clicked)

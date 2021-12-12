@@ -16,7 +16,8 @@
         android:theme="@style/Theme.RhythmnReps">
         <activity
             android:name=".ChooseCategoryActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".ListViewResults"
             android:exported="true" />

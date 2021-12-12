@@ -74,7 +74,6 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
     //could also use 'notifyDatasetChange', which is update, recalculates everything, better for more complicated examples
     //but this example does not have to do heavy calculating since only removing one item
 
-
     // Handling Orientation Changes on Android (any configuration changes)
     //preaping the bundle to keep track of (object data)
     //Attaches key-value pairs to the Bundle that is passed
@@ -193,7 +192,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
 
     }
 
-    //Add a new (generic info for now) item to the full itemList (no logo,
+    //Add a new (generic info for now) item to the full itemList (no logo)
     private void addItem(int position) {
         //add temp fake image, but this should be an exercise image... taken from json obj
         itemList.add(position, new ItemCard(R.drawable.ic_android_black_24dp, "No Logo item", "Item id: "

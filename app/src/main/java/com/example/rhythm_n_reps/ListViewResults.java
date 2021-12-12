@@ -32,8 +32,8 @@ public class ListViewResults extends AppCompatActivity {
         String JResults = extras.getString("jArray");
         Log.i("Returned jArray result", JResults.toString());
 
-        final TextView textView = findViewById(R.id.result_LISTVIEW);
-        textView.setText(JResults.charAt(8));
+//        final TextView textView = findViewById(R.id.result_LISTVIEW);
+//        textView.setText(JResults.charAt(8));
 
 //        Log.i("bundle result---", JResults.toString());
 
@@ -48,8 +48,6 @@ public class ListViewResults extends AppCompatActivity {
 
 //        courseRV.setLayoutManager(manager);
         //hook adapter to recylerView
-
-
 
 
     }

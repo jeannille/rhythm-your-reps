@@ -15,15 +15,17 @@ import com.squareup.picasso.Picasso;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
 
     // creating a variable for our array list and context.
-    private ArrayList<ExerciseRecyclerData> courseDataArrayList;
+    private ArrayList<ExerciseRecyclerData> exerciseRecyclerDataArrayList;
     private Context mcontext;
 
     // creating a constructor class.
     public RecyclerViewAdapter(ArrayList<ExerciseRecyclerData> recyclerDataArrayList, Context mcontext) {
-        this.courseDataArrayList = recyclerDataArrayList;
+        this.exerciseRecyclerDataArrayList = recyclerDataArrayList;
         this.mcontext = mcontext;
     }
 
+
+    //create the card view for given exercise and info
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,14 +34,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return new RecyclerViewHolder(view);
     }
 
+    //bind current position in RView to next available slot in RView of data array (cards) - set fields and load image
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         // Set the data to textview from our modal class.
-        ExerciseRecyclerData modal = courseDataArrayList.get(position);
+        ExerciseRecyclerData modal = exerciseRecyclerDataArrayList.get(position);
         holder.courseNameTV.setText(modal.getName());
         holder.courseTracksTV.setText(modal.getTarget());
         holder.courseModeTV.setText(modal.getBodyPart());
-        Picasso.get().load(modal.getGifUrl()).into(holder.courseIV);
+        Picasso.get().load(modal.getGifUrl()).into(holder.cardImageView); //make still image not gif for initial results list
     }
 
     //private String bodyPart;
@@ -52,23 +55,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         // this method returns the size of recyclerview
-        return courseDataArrayList.size();
+        return exerciseRecyclerDataArrayList.size();
     }
 
     // View Holder Class to handle Recycler View.
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our views.
         private TextView courseNameTV, courseModeTV, courseTracksTV;
-        private ImageView courseIV;
+        private ImageView cardImageView;
 
-        // what's in the ItemCard
+        // what's in an Exercise 'card'
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            // initializing our views with their ids.
-            courseNameTV = itemView.findViewById(R.id.idTVCourseName); // name
+            // initializing the layout with its view ids.
+            courseNameTV = itemView.findViewById(R.id.idCardExerciseName); // name
             courseModeTV = itemView.findViewById(R.id.idTVBatch);
             courseTracksTV = itemView.findViewById(R.id.idTVTracks);
-            courseIV = itemView.findViewById(R.id.idIVCourse); //gif image
+            cardImageView = itemView.findViewById(R.id.idCardImageView); //gif image
         }
         //imageView idIVCourse
         //textView idTVCourseName
