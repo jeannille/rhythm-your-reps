@@ -42,8 +42,6 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
     //set lists of items for each category to search the exercises API by, endpoints for reference
 
 
-
-
     private String[] bodyParts = new String[]{
             "back",
             "cardio",

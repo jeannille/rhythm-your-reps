@@ -97,14 +97,16 @@ public class TESTActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testactivity);
 
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SETUP FIRST SPINNER - Exercises filtered by BODYPART ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Spinner spinnerBodyParts = (Spinner) findViewById(R.id.bodyPart_spinner);
         //equip spinner w/ listener
-//        spinnerBodyParts.setOnItemSelectedListener(this);
+//      spinnerBodyParts.setOnItemSelectedListener(this); //only works if 1 spinner in Activity! (sets it to the whole Act.)
         ArrayAdapter adapterB = new ArrayAdapter(this, android.R.layout.simple_spinner_item, bodyParts);
         // Specify the default spinner layout for dropdown list of choices
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply adapter spinners respectively
+        // Apply adapter to spinner
         spinnerBodyParts.setAdapter(adapterB);
         spinnerBodyParts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -122,7 +124,10 @@ public class TESTActivity extends AppCompatActivity {
             }
         });
 
-        //set target Spinner, its adapter and itemClickelistener
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SETUP SECOND SPINNER - Exercises filtered by TARGET ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        //set target Spinner, its adapter and onItemSelectedListener
         //Target category Spinner
         Spinner spinnerTarget = (Spinner) findViewById(R.id.target_spinner);
         ArrayAdapter adapterT = new ArrayAdapter(this, android.R.layout.simple_spinner_item, target);
@@ -146,9 +151,38 @@ public class TESTActivity extends AppCompatActivity {
         });
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SETUP THIRD SPINNER - Exercises filtered by EQUIPMENT ~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Spinner spinnerEquipment = (Spinner) findViewById(R.id.equipment_spinner);
+        ArrayAdapter adapterE = new ArrayAdapter(this, android.R.layout.simple_spinner_item, equipment);
+        adapterE.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEquipment.setAdapter(adapterE);
+
+        spinnerEquipment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterE, View view, int i, long l) {
+
+                //store selected value from drop down, specified target adapter view
+                selectedEquipment = adapterE.getItemAtPosition(adapterE.getSelectedItemPosition()).toString();
+                Toast.makeText(TESTActivity.this, "HAVE selected TARGET -------" + selectedEquipment, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // not applicable
+
+            }
+        });
+
+
     }
 
 
+    /**
+     *
+     * @param view
+     */
     public void goToService(View view) {
         switch (view.getId()) {
             case R.id.selectBodyPartSearchButton:
@@ -172,6 +206,18 @@ public class TESTActivity extends AppCompatActivity {
 
                 startActivity(intent2);
                 break;
+
+            case R.id.selectEquipSearchButton:
+                Toast.makeText(TESTActivity.this, "HAVE CLICKED EQUIPMENT BUTTON--- and val is " + selectedEquipment  , Toast.LENGTH_SHORT).show();
+
+                Intent intent3 = new Intent(this, WebServiceActivity.class);
+                String sendOver3 = "equipment/" + selectedEquipment;
+                Log.i("triggered BODYPART BUTTON switch case ----- INTENT----- TESTActivity activity have gotten value of drop down", sendOver3);
+                intent3.putExtra("var", sendOver3);
+
+                startActivity(intent3);
+                break;
+
 
 
         }
