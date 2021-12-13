@@ -32,6 +32,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 //activity handles the user's input (from WebView), makes (HTTP) request to the web service
 // makes request and receives responses from the web service (third party api)
@@ -194,46 +195,35 @@ public class WebServiceActivity extends AppCompatActivity {
         protected void onPostExecute(JSONArray jArray) {
             super.onPostExecute(jArray);
             TextView result_view = (TextView) findViewById(R.id.URL_editText);
-            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage); //adapter handles this now - for each card/exercise
+//            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage); //adapter handles this now - for each card/exercise
 
             //dynamically traverse jArray, convert each to Exercise obj. and populate RecylerDataArrayList
             try {
-                String exName = jArray.getJSONObject(0).getString("name");
-                result_view.setText(exName);
+//                String exName = jArray.getJSONObject(0).getString("name");
+//                result_view.setText(exName);
+//
+//                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
+//                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
 
+                Integer len = recyclerDataArrayList.size();
+                for (int i = 0; i < jArray.length(); i++) {
 
-                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
-                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
+                    ExerciseRecyclerData e = new ExerciseRecyclerData(jArray.getJSONObject(i));
+                    recyclerDataArrayList.add(e);
+                }
+                Toast.makeText(getApplication(), len.toString(), Toast.LENGTH_SHORT).show();
+//
+                //create RecyclerView
+                recyclerView = findViewById(R.id.idRecyclerViewWebS);
+                //create and set layout manager for recyclerView
+                rLayoutManger = new LinearLayoutManager(WebServiceActivity.this);
+                recyclerView.setLayoutManager(rLayoutManger);
 
-
-//                for (int i = 0; i < jArray.length(); i++) {
-//
-//                    ExerciseRecyclerData e = new ExerciseRecyclerData(jArray.getJSONObject(i));
-//                    recyclerDataArrayList.add(e);
-//                }
-//                for (ExerciseRecyclerData i : recyclerDataArrayList) {
-//
-//                    recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
-//                    // store xml's linear layout manager for this class (customizable)
-//                    LinearLayoutManager manager = new LinearLayoutManager(WebServiceActivity.this);
-//
-//                    // set recyclerView's layout manager just created above
-//                    recyclerView.setLayoutManager(manager);
-//
-//                    // finally set adapter for recycler view, will act as middle man for data and its views
-//                    recyclerView.setAdapter(recyclerViewAdapter);
-//
-//                }
-//
-//                //create RecyclerView
-//                recyclerView = findViewById(R.id.idRecyclerViewWebS);
-//                //create and set layout manager for recyclerView
-//                rLayoutManger = new LinearLayoutManager(WebServiceActivity.this);
-//                recyclerView.setLayoutManager(rLayoutManger);
-//
-//                // create & set adapter to our recycler view
+                // create & set adapter to our recycler view
+                //portionRView
+                recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
 //                recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
-//                recyclerView.setAdapter(recyclerViewAdapter);
+                recyclerView.setAdapter(recyclerViewAdapter);
 
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");

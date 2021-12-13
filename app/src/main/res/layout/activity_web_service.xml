@@ -21,7 +21,7 @@
                 android:id="@+id/URL_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="abs"
+                android:text="Name of Exercise"
                 android:textSize="20sp"
                 android:layout_margin="30sp"/>
 
@@ -35,13 +35,20 @@
                 android:textColor="#081F50"
                 android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/webServiceImage"
-                android:layout_width="267dp"
-                android:layout_height="359dp"
-                android:layout_gravity="center|center_horizontal|center_vertical"
-                android:layout_marginBottom="20dp"
-                android:isScrollContainer="true" />
+<!--            <ImageView-->
+<!--                android:id="@+id/webServiceImage"-->
+<!--                android:layout_width="267dp"-->
+<!--                android:layout_height="359dp"-->
+<!--                android:layout_gravity="center|center_horizontal|center_vertical"-->
+<!--                android:layout_marginBottom="20dp"-->
+<!--                android:isScrollContainer="true" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/idRecyclerViewWebS"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="50dp"/>
+
 
         </LinearLayout>
     </ScrollView>
