@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name of Exercise"
                 android:textSize="20sp"
-                android:layout_margin="30sp"/>
+                android:layout_marginHorizontal="30sp"/>
 
             <TextView
                 android:id="@+id/result_textview"

@@ -31,6 +31,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +54,7 @@ public class WebServiceActivity extends AppCompatActivity {
     private RecyclerViewAdapter recyclerViewAdapter;
     private ProgressBar progressBar;
     private String url0;
-    private String queryStringReceived;
-
+    private String queryStringReceived; //sent via intent (user selection)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +72,7 @@ public class WebServiceActivity extends AppCompatActivity {
         // initializing variables, views that will be rendered from this activity
 //
 //        progressBar = findViewById(R.id.idProgBarWebS);
-//        TextView textView = findViewById(R.id.topOfResultsPage);
-//        textView.setText("TOP OF CARD LIST RESULTS PAGE");
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -81,7 +80,36 @@ public class WebServiceActivity extends AppCompatActivity {
             queryStringReceived = extras.getString("var");
         }
 
-        Log.i("retrieves extras from choose activity", queryStringReceived);
+        Log.i("successfully retrieves extras from choose activity", queryStringReceived);
+
+
+
+//        String choice = queryStringReceived.substring(queryStringReceived.lastIndexOf("/") + 1); //get the selected after category
+
+        String[] queryArr = queryStringReceived.split("/"); // category / choice
+        Log.i("~~~~~~~~~ use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[0]);
+        Log.i("~~~~~~~~~ CATEGORY use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[1]);
+
+        TextView result_view = (TextView)findViewById(R.id.URL_editText);
+        resultTextPage(queryArr[0], queryArr[1], result_view);
+
+
+        //wanted user to see the gif when cliked on image instead of having gif by default
+//        ImageView imageView = findViewById(R.id.idCardImageView);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(), "clicked on image", Toast.LENGTH_SHORT).show();
+//
+//                //R.get card id to get id.. ?? how will you get id of exercise to display
+//                //mabe just replace with glide so it moves
+//
+//                //if in gif mode change to still
+//                //if still, change to gif
+//            }
+//        });
+
+
 
         url0 = "https://exercisedb.p.rapidapi.com/exercises/" + queryStringReceived + apiKeyEndPoint;
 
@@ -93,6 +121,24 @@ public class WebServiceActivity extends AppCompatActivity {
 
         //where the magic happens
         callWebserviceButtonHandler(url0);
+
+    }
+
+    //generate different responses according to selection
+    public void resultTextPage(String category, String selection, TextView textView){
+
+        switch (category) {
+            case "bodyPart":
+                textView.setText("Bodypart focus : " + selection);
+                break;
+            case "target":
+                textView.setText("Targeted muscles : " + selection);
+                break;
+            case "equipment":
+                textView.setText("Equipment required : " + selection);
+                break;
+
+        }
 
     }
 
@@ -112,8 +158,7 @@ public class WebServiceActivity extends AppCompatActivity {
         PingWebServiceTask task = new PingWebServiceTask(); //extends asyncTask
 
         try {
-//            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/equipment/" + CATEGORYNAME FROM DROPDOWN + qString + apiKeyEndPoint);
-//            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/" + apiKeyEndPoint);
+            //validate url and execute endpoint to get json response
             url = NetworkUtil.validInput(url);
             task.execute(url);
         } catch (NetworkUtil.MyException e) {
@@ -135,7 +180,7 @@ public class WebServiceActivity extends AppCompatActivity {
 //            exercise = new ItemCard( Integer.parseInt( jObject.getString("id")), jObject.getString("name"), gif, false);
 
         } catch (JSONException e) {
-            Log.i("ERROR trying to create obj----", "Something went wronggggg----");
+            Log.i("ERROR trying to create obj----", "Something went WRONG----");
 //            result_view.setText("Something went wrong!");
             Toast.makeText(getApplicationContext(), "Something went wrong WOMPWOMP", Toast.LENGTH_SHORT).show();
         }

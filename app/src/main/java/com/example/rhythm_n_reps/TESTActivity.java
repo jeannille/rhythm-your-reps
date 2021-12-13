@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /*
@@ -29,6 +30,8 @@ public class TESTActivity extends AppCompatActivity {
     private String selectedTarget;
     private String selectedBodyPart;
     private String selectedEquipment;
+
+    private TextView result_view; //text at top of page results from WebServ Activity
 
     //buttons to submit search
     private Button targetButton;
@@ -122,6 +125,8 @@ public class TESTActivity extends AppCompatActivity {
                 //store selcted value, do not do intent, only push intent when target button clicked
                 selectedBodyPart = adapterB.getItemAtPosition(adapterB.getSelectedItemPosition()).toString();
                 Toast.makeText(TESTActivity.this, "HAVE selected BODYPART -------" + selectedBodyPart, Toast.LENGTH_SHORT).show();
+//                result_view.setText("Exercises focused on body part: " + selectedBodyPart);
+
             }
 
             @Override
@@ -229,19 +234,4 @@ public class TESTActivity extends AppCompatActivity {
         }
     }
 
-
-//    @Override
-//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//        Intent intent = new Intent(this, WebServiceActivity.class);
-//        String sendOver = "equipment/rope";
-//        intent.putExtra("var", sendOver);
-//        startActivity(intent);
-//
-//    }
-//
-//    @Override
-//    public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//    }
 }
