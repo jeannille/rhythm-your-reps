@@ -34,7 +34,8 @@
         <activity
             android:name=".WebServiceActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".TESTActivity"/>
 <!--        <activity-->
 <!--            android:name=".WWorkshopActivity"-->
 <!--            android:exported="true"-->

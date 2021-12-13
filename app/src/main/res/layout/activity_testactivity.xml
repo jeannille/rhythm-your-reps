@@ -7,8 +7,9 @@
     tools:context=".TESTActivity">
 
 
+
     <Spinner
-        android:id="@+id/testSpinner"
+        android:id="@+id/target_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,15 +21,39 @@
 
 
     <Button
-        android:id="@+id/testGetWebServiceResults"
+        android:id="@+id/selectTargetSearchButton"
+        android:onClick="goToService"
         android:layout_width="252dp"
         android:layout_height="59dp"
-        android:layout_marginTop="48dp"
+        android:backgroundTint="#4B6CAE"
+        android:text="Search by Target"
+        app:layout_constraintBottom_toTopOf="@+id/bodyPart_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/target_spinner" />
+
+    <Button
+        android:id="@+id/selectBodyPartSearchButton"
+        android:layout_width="252dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="#4B6CAE"
         android:onClick="goToService"
         android:text="Search by Bodypart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/bodyPart_spinner" />
+
+    <Spinner
+        android:id="@+id/bodyPart_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367" />
 </androidx.constraintlayout.widget.ConstraintLayout>
