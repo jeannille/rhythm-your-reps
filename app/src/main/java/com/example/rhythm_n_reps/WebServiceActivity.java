@@ -11,6 +11,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,7 @@ public class WebServiceActivity extends AppCompatActivity {
     //API key will be used for all exercise API access endpoints
     private static final String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
 
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager rLayoutManger;
     // creating new array list to store api response results as ExerciseRecyclerData (formatted)
@@ -51,26 +54,36 @@ public class WebServiceActivity extends AppCompatActivity {
     private String url0;
     private String queryStringReceived;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_service);
+//        setContentView(R.layout.activity_web_service);
+        //explicitly inflate the web service view
+        LayoutInflater inflater = LayoutInflater.from(WebServiceActivity.this); // 1
+        View inflatedView = inflater.inflate(R.layout.activity_web_service, null);
+        setContentView(inflatedView);
+
+        Handler handler = new Handler();
 //        mURLEditText = findViewById(R.id.URL_editText);
 //        mTitleTextView = findViewById(R.id.result_textview);
 
         // initializing variables, views that will be rendered from this activity
-
-        progressBar = findViewById(R.id.idProgBarWebS);
-        TextView textView = findViewById(R.id.topOfResultsPage);
-        textView.setText("TOP OF CARD LIST RESULTS PAGE");
+//
+//        progressBar = findViewById(R.id.idProgBarWebS);
+//        TextView textView = findViewById(R.id.topOfResultsPage);
+//        textView.setText("TOP OF CARD LIST RESULTS PAGE");
 
 //        Intent i = getIntent();
 //        queryString = i.getExtras().getString("selectedFilter");
 
         //retrieve user's search criteria selection sent from ChooseCategoryActivity
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            queryStringReceived = extras.getString("selectedFilter"); //have to get queryString2 and 3
+//            queryStringReceived = extras.getString("selectedFilter"); //have to get queryString2 and 3
+            queryStringReceived = extras.getString("var");
         }
 
         Log.i("retrieves extras from choose activity", queryStringReceived);
@@ -78,6 +91,7 @@ public class WebServiceActivity extends AppCompatActivity {
         url0 = "https://exercisedb.p.rapidapi.com/exercises/" + queryStringReceived + apiKeyEndPoint;
 
         Log.i("Fully built url after getting info and showing in WebService Activity-------", url0);
+        //logcat displays this error right after above log print out: W/RecyclerView: No adapter attached; skipping layout
 
 //        queryString = i.getExtras().getString("selectedFilter");
 //        textView.setText(queryString).charAt(8)); //test result and font size check
@@ -86,8 +100,7 @@ public class WebServiceActivity extends AppCompatActivity {
 //        url0 = "https://exercisedb.p.rapidapi.com/exercises/equipment/rope?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
 
         //where the magic happens
-        callWebserviceButtonHandler(queryStringReceived);
-
+        callWebserviceButtonHandler(url0);
 
     }
 
@@ -103,17 +116,13 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
     //when user clicks on button, new Async task created, get url user has entered and execute it
-    public void callWebserviceButtonHandler(String qString) {
+    public void callWebserviceButtonHandler(String url) {
         PingWebServiceTask task = new PingWebServiceTask(); //extends asyncTask
 
-//        String rawInput = mURLEditText.getText().toString();
-
-        //when user chooses target, display with userInput as target in URL and return
         try {
 //            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/equipment/" + CATEGORYNAME FROM DROPDOWN + qString + apiKeyEndPoint);
 //            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/" + apiKeyEndPoint);
-            String url = NetworkUtil.validInput(url0);
-
+            url = NetworkUtil.validInput(url);
             task.execute(url);
         } catch (NetworkUtil.MyException e) {
             Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -122,9 +131,6 @@ public class WebServiceActivity extends AppCompatActivity {
 
     //TODO re-implement url format by which category was chosen
     //append user's input as query to api that includes my API key
-    //hardcoded exercise returns
-    //returns array of results for exercises that focus on whatever user has entered
-    //if button/view clicked is for target, use this URL endpoint
 /*
             switch (view.getId()) {
                 case R.id.searchByTargetButton:
@@ -148,18 +154,14 @@ public class WebServiceActivity extends AppCompatActivity {
 //            // TESTING DEC 10 - returns JSON ARRAY OF ABS exercises
 //            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
 //            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/bodyPart/" + queryString + apiKeyEndPoint);
-//            task.execute(url);
-//        }
-
-//        } catch (NetworkUtil.MyException e) {
-//            Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
 
 
+
+    //did not end up using but will keep for now
     public ExerciseRecyclerData jsonToRData(JSONObject jObject) {
         ExerciseRecyclerData exercise = null; //placeholder for try and catch
         //test intent to add to RView instead, JSONArray
-        //or function to make one JSON obj from array into item card for now w/ just name & gif
-        //getDesc is gifurl for now
+
         try {
             //gif only displays when protocol in url is 'https' not 'http' like the raw data url
             String gif = jObject.getString("gifUrl").replace("http", "https");
@@ -169,10 +171,11 @@ public class WebServiceActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Log.i("ERROR trying to create obj----", "Something went wronggggg----");
 //            result_view.setText("Something went wrong!");
-            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Something went wrong WOMPWOMP", Toast.LENGTH_SHORT).show();
         }
         return exercise;
     }
+
 
     private class PingWebServiceTask extends AsyncTask<String, Integer, JSONArray> {
         //Asynctask off main thread
@@ -196,13 +199,10 @@ public class WebServiceActivity extends AppCompatActivity {
                 //NetworkUtil creates HttpURLConnection obj & uses GET req method
                 //reads response using input stream & returns resp as String
                 String resp = NetworkUtil.httpResponse(url0); // full json array of results as a string given the endpoint (only use w/ shorter response results!)
-                Log.i("~~~~~~~~~~~~~~~~~~~~~~json resp of networkUtil.httpResponse(url)~~~~~~~~~~~~", resp); //10items, equipment/rope
+//                Log.i("~~~~~~~~~~~~~~~~~~~~~~json resp of networkUtil.httpResponse(url)~~~~~~~~~~~~", resp);
 
                 //initialize placeholder json array of retrieved results/response from endpoint
                 jArray = new JSONArray(resp);
-//                Integer arrLen = jArray.length();
-//                Log.i("DEC 9 length of array -------", arrLen.toString()); // how many json obj returned?
-//                jObject = jArray.getJSONObject(0);
 
                 return jArray; //json array of returned exercises
 
@@ -228,16 +228,24 @@ public class WebServiceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jArray) {
             super.onPostExecute(jArray);
-            TextView result_view = (TextView) findViewById(R.id.topOfResultsPage);
-//            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage); //adapter handles this now - for each card/exercise
+            TextView result_view = (TextView) findViewById(R.id.URL_editText);
+            ImageView imageView= (ImageView) findViewById(R.id.webServiceImage); //adapter handles this now - for each card/exercise
 
             //dynamically traverse jArray, convert each to Exercise obj. and populate RecylerDataArrayList
             try {
-                for (int i = 0; i < jArray.length(); i++) {
+                String exName = jArray.getJSONObject(0).getString("name");
+                result_view.setText(exName);
 
-                    ExerciseRecyclerData e = new ExerciseRecyclerData(jArray.getJSONObject(i));
-                    recyclerDataArrayList.add(e);
-                }
+
+                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
+                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
+
+
+//                for (int i = 0; i < jArray.length(); i++) {
+//
+//                    ExerciseRecyclerData e = new ExerciseRecyclerData(jArray.getJSONObject(i));
+//                    recyclerDataArrayList.add(e);
+//                }
 //                for (ExerciseRecyclerData i : recyclerDataArrayList) {
 //
 //                    recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
@@ -251,16 +259,16 @@ public class WebServiceActivity extends AppCompatActivity {
 //                    recyclerView.setAdapter(recyclerViewAdapter);
 //
 //                }
-
-                //create RecyclerView
-                recyclerView = findViewById(R.id.idRecyclerViewWebS);
-                //create and set layout manager for recyclerView
-                rLayoutManger = new LinearLayoutManager(WebServiceActivity.this);
-                recyclerView.setLayoutManager(rLayoutManger);
-
-                // create & set adapter to our recycler view
-                recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
-                recyclerView.setAdapter(recyclerViewAdapter);
+//
+//                //create RecyclerView
+//                recyclerView = findViewById(R.id.idRecyclerViewWebS);
+//                //create and set layout manager for recyclerView
+//                rLayoutManger = new LinearLayoutManager(WebServiceActivity.this);
+//                recyclerView.setLayoutManager(rLayoutManger);
+//
+//                // create & set adapter to our recycler view
+//                recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
+//                recyclerView.setAdapter(recyclerViewAdapter);
 
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WWorkshopActivity">
+    >
 
     <ImageView
         android:id="@+id/imageView"
@@ -39,10 +39,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

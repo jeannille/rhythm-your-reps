@@ -35,18 +35,16 @@ import java.util.ArrayList;
 public class ChooseCategoryActivity extends AppCompatActivity implements OnItemSelectedListener {
 
     private static final String TAG = "ChooseCategoryActivity";
-    private static final String API_KEY_ENDPOINT= "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
-    private String queryString;
-    private RecyclerView recyclerView;
-    //    private JSONArray recyclerDataArrayList;
-    private ArrayList<ExerciseRecyclerData> recyclerDataArrayList;
-    private RecyclerViewAdapter recyclerViewAdapter;
-    private ProgressBar progressBar;
+//    private static final String API_KEY_ENDPOINT= "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
+//    private String queryString;
+
 
     //set lists of items for each category to search the exercises API by, endpoints for reference
 
 
-    String[] bodyParts = new String[]{
+
+
+    private String[] bodyParts = new String[]{
             "back",
             "cardio",
             "chest",
@@ -59,7 +57,7 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
             "waist"};
 
     // /exercises/target/{target}
-    String[] target = new String[]{
+    private String[] target = new String[]{
             "abductors",
             "abs",
             "adductors",
@@ -81,7 +79,7 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
             "upper back"};
 
     //    /exercises/equipment/{type}
-    String[] equipment = new String[]{
+    private String[] equipment = new String[]{
             "assisted",
             "band",
             "barbell",
@@ -127,6 +125,9 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply adapter spinners respectively
         spinnerBodyParts.setAdapter(adapterB);
+    }
+
+
 
 //        spinnerBodyParts.setOnItemSelectedListener(new View.OnClickListener() {
 //            @Override
@@ -154,25 +155,33 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
 
         //now set resulting recyclerViews for after spinner value has been selected
         //new intent for web handler
-    }
+
 
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 //        String chosenOption = (String) parent.getItemAtPosition(position);
 
+
+
+        //create intent and launch WebServiceActivity
+        //TODO uncomment after testing
+       /*
+
         String userSelection = adapterView.getItemAtPosition(adapterView.getSelectedItemPosition()).toString();
 
         Log.i("resulting userSelection text from spinner in ChooseCat Activity---------", userSelection);
 
         String queryString1 = "bodyPart/" + userSelection;
-        //create intent and launch WebServiceActivity
-        Intent i = new Intent(this, WebServiceActivity.class);
+
+       Intent i = new Intent(this, WebServiceActivity.class);
         // send over both 'bodypart' and {userSelection} values for url
         i.putExtra( "selectedFilter", queryString1);
 
         Log.i("------ switch case body part spinner-------", queryString1 );
         startActivity(i);
+        */
+
 
 
 
@@ -218,7 +227,7 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
 
 //        Toast.makeText(getApplicationContext(), userSelection, Toast.LENGTH_LONG).show();
 
-        //example url request if user chose bodypart: https://exercisedb.p.rapidapi.com/exercises/bodyPart/userSelection
+        //example url request if user chose bodypart: https://exercisedb.p.rapidapi.com/exercises/bodyPart/userSelection?MYAPIKEY
 
         //once selected, a button below this spinner will call webServiceHandler w/ url above
         //and new recyclerview will open etc

@@ -3,6 +3,8 @@ package com.example.rhythm_n_reps;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import java.util.ArrayList;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,17 +33,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate Layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_layout, parent, false);
+        String vStr = view.toString();
+        Log.i("-----------------testing if we've reached adapter", vStr);
         return new RecyclerViewHolder(view);
     }
 
     //bind current position in RView to next available slot in RView of data array (cards) - set fields and load image
+    //set gif url only once, when we bind RecyclerViewHolder to each value of Exercise object
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         // Set the data to textview from our modal class.
         ExerciseRecyclerData modal = exerciseRecyclerDataArrayList.get(position);
-        holder.courseNameTV.setText(modal.getName());
-        holder.courseTracksTV.setText(modal.getTarget());
-        holder.courseModeTV.setText(modal.getBodyPart());
+        holder.cardExerciseName.setText(modal.getName());
+        holder.cardTargetView.setText(modal.getTarget());
+        holder.cardBodyPart.setText(modal.getBodyPart());
+        holder.cardEquipmentView.setText(modal.getEquipment());
+
         Picasso.get().load(modal.getGifUrl()).into(holder.cardImageView); //make still image not gif for initial results list
     }
 
@@ -61,21 +68,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // View Holder Class to handle Recycler View.
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         // creating variables for our views.
-        private TextView courseNameTV, courseModeTV, courseTracksTV;
+        private TextView cardExerciseName, cardBodyPart, cardTargetView, cardEquipmentView ;
         private ImageView cardImageView;
 
         // what's in an Exercise 'card'
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing the layout with its view ids.
-            courseNameTV = itemView.findViewById(R.id.idCardExerciseName); // name
-            courseModeTV = itemView.findViewById(R.id.idTVBatch);
-            courseTracksTV = itemView.findViewById(R.id.idTVTracks);
+            cardExerciseName = itemView.findViewById(R.id.idCardExerciseName); // name
+            cardBodyPart = itemView.findViewById(R.id.idCardBodypart);
+            cardTargetView = itemView.findViewById(R.id.idTargetCardView);
             cardImageView = itemView.findViewById(R.id.idCardImageView); //gif image
+            cardEquipmentView = itemView.findViewById(R.id.idCardExerciseName);
         }
-        //imageView idIVCourse
-        //textView idTVCourseName
-        //textView idTVBatch
-        //textView idTVTracks
+
     }
 }

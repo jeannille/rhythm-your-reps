@@ -24,13 +24,13 @@ public class ListViewResults extends AppCompatActivity {
         setContentView(R.layout.activity_list_view_results);
 
         //get query results - array from WebService when user clicks on get results
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            return;
-        }
+//        Bundle extras = getIntent().getExtras();
+//        if (extras == null) {
+//            return;
+//        }
 
-        String JResults = extras.getString("jArray");
-        Log.i("Returned jArray result", JResults.toString());
+//        String JResults = extras.getString("jArray");
+//        Log.i("Returned jArray result", JResults.toString());
 
 //        final TextView textView = findViewById(R.id.result_LISTVIEW);
 //        textView.setText(JResults.charAt(8));
