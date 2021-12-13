@@ -74,12 +74,6 @@ public class WebServiceActivity extends AppCompatActivity {
 //        TextView textView = findViewById(R.id.topOfResultsPage);
 //        textView.setText("TOP OF CARD LIST RESULTS PAGE");
 
-//        Intent i = getIntent();
-//        queryString = i.getExtras().getString("selectedFilter");
-
-        //retrieve user's search criteria selection sent from ChooseCategoryActivity
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 //            queryStringReceived = extras.getString("selectedFilter"); //have to get queryString2 and 3
@@ -95,9 +89,6 @@ public class WebServiceActivity extends AppCompatActivity {
 
 //        queryString = i.getExtras().getString("selectedFilter");
 //        textView.setText(queryString).charAt(8)); //test result and font size check
-
-        //build and save url
-//        url0 = "https://exercisedb.p.rapidapi.com/exercises/equipment/rope?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
 
         //where the magic happens
         callWebserviceButtonHandler(url0);
@@ -130,32 +121,6 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
     //TODO re-implement url format by which category was chosen
-    //append user's input as query to api that includes my API key
-/*
-            switch (view.getId()) {
-                case R.id.searchByTargetButton:
-                    Log.i("R ID clicked on IS", "TARGET");
-                    String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/" + queryString + apiKeyEndPoint);
-                    task.execute(url);
-                    break;
-                case R.id.searchByBodypartButton:
-                    Log.i("R ID clicked on BODYPART", "BODY PART");
-                    String url2 = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/bodyPart/" + queryString + apiKeyEndPoint);
-                    task.execute(url2);
-                    break;
-                case R.id.searchByEquipButton:
-                    Log.i("R ID clicked on EQUIPMENT", "EQUIPMENT");
-                    String urlEquip = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/equipment/" + queryString + apiKeyEndPoint);
-                    task.execute(urlEquip);
-                    break;
-//            }
-*/
-//            Log.i("R ID clicked on IS", "TARGET");
-//            // TESTING DEC 10 - returns JSON ARRAY OF ABS exercises
-//            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/target/abs?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f");
-//            String url = NetworkUtil.validInput("https://exercisedb.p.rapidapi.com/exercises/bodyPart/" + queryString + apiKeyEndPoint);
-
-
 
     //did not end up using but will keep for now
     public ExerciseRecyclerData jsonToRData(JSONObject jObject) {

@@ -16,6 +16,13 @@ import android.widget.Toast;
 class to test connection between user selection and passing to web service
  */
 
+/**
+ * CURRENT TESTER tentatively replacing ChooseCategoryActivity ----
+ * Where User will choose to search for exercises by either target, bodyPart, or equipment.
+ * The selection event handler for the spinner (of choices) is implemented by using AdapterView OnItemSelectedListener.
+ * Registr a callback to be invoked when an item in this AdapterView has been clicked.
+ */
+
 public class TESTActivity extends AppCompatActivity {
 
     //resulting string values from user selection to parse in url for correct endpoint to web server
@@ -180,13 +187,13 @@ public class TESTActivity extends AppCompatActivity {
 
 
     /**
-     *
+     * Buttons that send the corresponding user category choice (formatted string for url endpoint) to webService via Intents.
      * @param view
      */
     public void goToService(View view) {
         switch (view.getId()) {
             case R.id.selectBodyPartSearchButton:
-                Toast.makeText(TESTActivity.this, "HAVE CLICKED BODYPART BUTTON--- and val is " + selectedBodyPart  , Toast.LENGTH_SHORT).show();
+                Toast.makeText(TESTActivity.this, "HAVE CLICKED BODYPART BUTTON--- and val is " + selectedBodyPart, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, WebServiceActivity.class);
                 String sendOver = "bodyPart/" + selectedBodyPart;
@@ -197,7 +204,7 @@ public class TESTActivity extends AppCompatActivity {
                 break;
 
             case R.id.selectTargetSearchButton:
-                Toast.makeText(TESTActivity.this, "HAVE CLICKED TARGET BUTTON--- and val is " + selectedTarget  , Toast.LENGTH_SHORT).show();
+                Toast.makeText(TESTActivity.this, "HAVE CLICKED TARGET BUTTON--- and val is " + selectedTarget, Toast.LENGTH_SHORT).show();
 
                 Intent intent2 = new Intent(this, WebServiceActivity.class);
                 String sendOver2 = "target/" + selectedTarget;
@@ -208,7 +215,7 @@ public class TESTActivity extends AppCompatActivity {
                 break;
 
             case R.id.selectEquipSearchButton:
-                Toast.makeText(TESTActivity.this, "HAVE CLICKED EQUIPMENT BUTTON--- and val is " + selectedEquipment  , Toast.LENGTH_SHORT).show();
+                Toast.makeText(TESTActivity.this, "HAVE CLICKED EQUIPMENT BUTTON--- and val is " + selectedEquipment, Toast.LENGTH_SHORT).show();
 
                 Intent intent3 = new Intent(this, WebServiceActivity.class);
                 String sendOver3 = "equipment/" + selectedEquipment;
@@ -217,7 +224,6 @@ public class TESTActivity extends AppCompatActivity {
 
                 startActivity(intent3);
                 break;
-
 
 
         }
