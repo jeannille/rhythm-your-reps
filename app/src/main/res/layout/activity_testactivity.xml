@@ -7,29 +7,28 @@
     tools:context=".TESTActivity">
 
 
-
     <Spinner
         android:id="@+id/target_spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/selectTargetSearchButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
-
+        app:layout_constraintVertical_bias="0.766" />
 
     <Button
         android:id="@+id/selectTargetSearchButton"
-        android:onClick="goToService"
         android:layout_width="252dp"
         android:layout_height="59dp"
         android:backgroundTint="#4B6CAE"
+        android:onClick="goToService"
         android:text="Search by Target"
+
         app:layout_constraintBottom_toTopOf="@+id/bodyPart_spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/target_spinner" />
 
@@ -37,50 +36,50 @@
         android:id="@+id/selectBodyPartSearchButton"
         android:layout_width="252dp"
         android:layout_height="59dp"
-        android:layout_marginTop="40dp"
         android:backgroundTint="#4B6CAE"
         android:onClick="goToService"
         android:text="Search by Bodypart"
+        app:layout_constraintBottom_toTopOf="@+id/equipment_spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bodyPart_spinner" />
 
     <Spinner
         android:id="@+id/bodyPart_spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/selectBodyPartSearchButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.367" />
+        app:layout_constraintTop_toBottomOf="@+id/selectTargetSearchButton" />
 
     <Spinner
         android:id="@+id/equipment_spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.578" />
+        app:layout_constraintVertical_bias="0.616" />
 
     <Button
         android:id="@+id/selectEquipSearchButton"
-        android:onClick="goToService"
         android:layout_width="252dp"
         android:layout_height="59dp"
         android:backgroundTint="#4B6CAE"
+        android:onClick="goToService"
         android:text="Search by Equipment"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/equipment_spinner"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.231" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

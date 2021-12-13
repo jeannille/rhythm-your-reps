@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(workshopIntent);
 //                break;
                 //button to open up web service - exercise
-            case R.id.activityWebService:
-                Intent webIntent = new Intent(this, TESTActivity.class);
-                startActivity(webIntent);
-                break;
+//            case R.id.activityWebService:
+//                Intent webIntent = new Intent(this, WebServiceActivity.class);
+//                startActivity(webIntent);
+//                break;
 //            case R.id.buttonToSessionLIst:
 //                Intent listSessionIntent = new Intent(this, ListWorkoutSessionActivity.class);
 //                startActivity(listSessionIntent);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
             //testing
             case R.id.chooseCategoryActivity:
-                Intent spinnersIntent = new Intent(this, ChooseCategoryActivity.class);
+                Intent spinnersIntent = new Intent(this, TESTActivity.class);
                 startActivity(spinnersIntent);
                 break;
         }
