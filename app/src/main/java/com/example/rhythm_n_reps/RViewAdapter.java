@@ -1,10 +1,13 @@
 package com.example.rhythm_n_reps;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -18,11 +21,11 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
 
     //Takes in ItemCard View and creates array list if ItemCards
 
-    private final ArrayList<ItemCard> itemList;
+    private final ArrayList<ExerciseRecyclerData> itemList;
     private ItemClickListener listener; //listens for when card is clicked on
 
     //Constructor
-    public RViewAdapter(ArrayList<ItemCard> itemList) {
+    public RViewAdapter(ArrayList<ExerciseRecyclerData> itemList) {
         this.itemList = itemList;
     }
 
@@ -45,12 +48,13 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
     // For an onBindViewHolder event, SETS all itemCard ImageResource etc. by using getters
     @Override
     public void onBindViewHolder(RViewHolder holder, int position) {
-        ItemCard currentItem = itemList.get(position); //get current item in array of json objs?
+        ExerciseRecyclerData currentItem = itemList.get(position); //get current item in array of json objs?
 
-        // RViewHolder's image icon
-        holder.itemIcon.setImageResource(currentItem.getImageSource());
-        holder.itemName.setText(currentItem.getItemName());
-        holder.itemDesc.setText(currentItem.getItemDesc());
+        // RViewHolder's image icon, should be still image of Exercise item
+        Picasso.get().load(currentItem.getGifUrl()).into(holder.itemGif);
+        Log.i("RVIEW ADAPTER bound gifUrl, resulting gif for this specific holder - YERRRR----> ", currentItem.getGifUrl() );
+        holder.itemName.setText(currentItem.getName());
+        holder.itemBodyPart.setText(currentItem.getBodyPart());
         holder.checkBox.setChecked(currentItem.getStatus());
     }
 

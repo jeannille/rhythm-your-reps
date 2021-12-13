@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RViewHolder extends RecyclerView.ViewHolder {
 
 // One card view displays the card's image icon, name, text description and checkbox
-    public ImageView itemIcon; //image view of exercise, use Picasso
+    public ImageView itemGif; //image view of exercise, use Picasso
     public TextView itemName; //description, name
-    public TextView itemDesc;
+    public TextView itemBodyPart;
+
     public CheckBox checkBox; //add to workout list
 
 
@@ -21,9 +22,9 @@ public class RViewHolder extends RecyclerView.ViewHolder {
     //should only find IDs once, when creating the item card
     public RViewHolder(View itemView, final ItemClickListener listener) {
         super(itemView); //passed to view holder, actual item card on list
-        itemIcon = itemView.findViewById(R.id.item_icon); //
+        itemGif = itemView.findViewById(R.id.item_icon); //
         itemName = itemView.findViewById(R.id.item_name);
-        itemDesc = itemView.findViewById(R.id.item_desc);
+        itemBodyPart = itemView.findViewById(R.id.item_desc);
         checkBox = itemView.findViewById(R.id.checkbox);
         //below, set on click listener for itemViews
 

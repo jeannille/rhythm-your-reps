@@ -18,28 +18,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RhythmnReps">
         <activity
-            android:name=".TESTActivity"
+            android:name=".UserWorkoutActivity"
             android:exported="true" />
-<!--        <activity-->
-<!--            android:name=".ChooseCategoryActivity"-->
-<!--            android:exported="true"-->
-<!--            android:parentActivityName=".MainActivity" />-->
-<!--        <activity-->
-<!--            android:name=".ListViewResults"-->
-<!--            android:exported="true" />-->
-<!--        <activity-->
-<!--            android:name=".ListWorkoutSessionActivity"-->
-<!--            android:exported="true"-->
-<!--            android:parentActivityName=".MainActivity" />-->
+        <activity
+            android:name=".TESTActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/> <!-- <activity -->
+        <!-- android:name=".ChooseCategoryActivity" -->
+        <!-- android:exported="true" -->
+        <!-- android:parentActivityName=".MainActivity" /> -->
+        <!-- <activity -->
+        <!-- android:name=".ListViewResults" -->
+        <!-- android:exported="true" /> -->
+         <activity
+         android:name=".ListWorkoutSessionActivity"
+         android:exported="true"
+         android:parentActivityName=".MainActivity" />
         <activity
             android:name=".WebServiceActivity"
             android:exported="true"
+            android:parentActivityName=".TESTActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".TESTActivity"/>
-<!--        <activity-->
-<!--            android:name=".WWorkshopActivity"-->
-<!--            android:exported="true"-->
-<!--            android:parentActivityName=".ChooseCategoryActivity" />-->
+            /> <!-- <activity -->
+        <!-- android:name=".WWorkshopActivity" -->
+        <!-- android:exported="true" -->
+        <!-- android:parentActivityName=".ChooseCategoryActivity" /> -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
