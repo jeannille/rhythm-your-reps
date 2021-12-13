@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * It reads the data and passes it to ViewHolder
  */
 
-
+//adapter for slightly different RecyclerView lists since user should be able to delete and check
 public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
 
     //Takes in ItemCard View and creates array list if ItemCards

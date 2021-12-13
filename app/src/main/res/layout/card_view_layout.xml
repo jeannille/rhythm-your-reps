@@ -18,49 +18,63 @@
         <!--text view for our course name-->
         <ImageView
             android:id="@+id/idCardImageView"
-            android:layout_width="250dp"
-            android:layout_height="175dp"
+            android:layout_width="225dp"
+            android:layout_height="144dp"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
-            android:paddingLeft="20dp"/>
+            android:paddingLeft="20dp" />
 
         <TextView
             android:id="@+id/idCardExerciseName"
-            android:layout_width="match_parent"
+            android:layout_width="224dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:padding="5dp"
+            android:padding="2dp"
             android:text="Exercise Name"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="373dp"
+            android:layout_height="100dp"
             android:layout_margin="5dp"
             android:orientation="horizontal"
-            android:weightSum="2">
+            >
 
             <!--text view for our batch name-->
             <TextView
                 android:id="@+id/idCardBodypart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:lineSpacingMultiplier="1.0"
                 android:padding="5dp"
                 android:text="body part"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
             <!--text view to display course tracks-->
             <TextView
                 android:id="@+id/idTargetCardView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Tracks"
-                android:textColor="@color/black" />
+                android:text="Target"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"/>
+
+
         </LinearLayout>
+
+
 
     </LinearLayout>
 

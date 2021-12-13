@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 //Adapter class sets data to out Recycler Item
@@ -44,12 +46,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         // Set the data to textview from our modal class.
         ExerciseRecyclerData modal = exerciseRecyclerDataArrayList.get(position);
-        holder.cardExerciseName.setText(modal.getName());
-        holder.cardTargetView.setText(modal.getTarget());
-        holder.cardBodyPart.setText(modal.getBodyPart());
-        holder.cardEquipmentView.setText(modal.getEquipment());
+        holder.cardExerciseName.setText("Exercise: " +  modal.getName() );
+        holder.cardTargetView.setText("Target: " + modal.getTarget());
+        holder.cardBodyPart.setText("Body part: " + modal.getBodyPart() + "\n\n" +"Target: " + modal.getTarget());
+        holder.cardEquipmentView.setText("Equipment required: " + modal.getEquipment() );
 
-        Picasso.get().load(modal.getGifUrl()).into(holder.cardImageView); //make still image not gif for initial results list
+//        Picasso.get().load(modal.getGifUrl()).into(holder.cardImageView); //make still image not gif for initial results list
+
+//        ImageView imageView= (ImageView) ;
+        String imgStr = modal.getGifUrl();
+        Glide.with(holder.cardImageView.getContext()).load(imgStr).into(holder.cardImageView);
+
+
     }
 
     //private String bodyPart;
@@ -79,7 +87,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cardBodyPart = itemView.findViewById(R.id.idCardBodypart);
             cardTargetView = itemView.findViewById(R.id.idTargetCardView);
             cardImageView = itemView.findViewById(R.id.idCardImageView); //gif image
-            cardEquipmentView = itemView.findViewById(R.id.idCardExerciseName);
+            cardEquipmentView = itemView.findViewById(R.id.idTargetCardView);
         }
 
     }
