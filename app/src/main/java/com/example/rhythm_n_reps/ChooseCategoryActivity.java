@@ -191,12 +191,9 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         protected void onPostExecute(JSONArray jArray) {
             super.onPostExecute(jArray);
 
-            TextView textView = findViewById(R.id.textUserListView);
+//            TextView textView = findViewById(R.id.textUserListView);
             JSONObject t = null;
-
-            ArrayList<String> myStringArray = new ArrayList<String>();
-
-
+//            ArrayList<String> myStringArray = new ArrayList<String>();
 
             try {
                 for (int i = 0; i < jArray.length(); i++) {
@@ -206,17 +203,17 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                     ExerciseRecyclerData exe = new ExerciseRecyclerData(jsonobject);
 //                    flowers.setName(jsonobject.getString("name"));
                     exercisesList.add(exe); //add this Exe item to our resulting exercises list
-                    myStringArray.add(exe.getName() + "  " + exe.getTarget());
+//                    myStringArray.add(exe.getName() + "  " + exe.getTarget());
 
                 } //end of for loop, in try
 
 //                String exName = jArray.getJSONObject(0).getString("name");
 //                textView.setText(exName);
 
-
                 //now create adapter for our list of returned results, simple_list item is a formatted layout for each item
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_list_item_1, myStringArray);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_list_item_1, myStringArray);
 
+                CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(), R.layout.activity_choose_category, exercisesList);
                 // now set adapter to list view
                 ListView listView = (ListView) findViewById(R.id.userListView);
                 listView.setAdapter(adapter);
