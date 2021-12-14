@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import android.os.Bundle;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
@@ -97,27 +98,9 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
         }
 //
 
-//        ExerciseRecyclerData one = new ExerciseRecyclerData({
-//                "bodyPart": "upper arms",
-//                "equipment": "barbell",
-//                "gifUrl": "http://d205bpvrqc9yn1.cloudfront.net/0038.gif",
-//                "id": "0038",
-//                "name": "barbell drag curl",
-//                "target": "biceps"});
 
 
-
-        init(savedInstanceState); // call our initialized savedInstanceState
-
-//        addButton = findViewById(R.id.addButton); //find/save floating action button & set clickListener below
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//                                         @Override
-//                                         public void onClick(View v) {
-//                                             int pos = 0;
-//                                             addItem(pos); //floating button adds item to position 0 of our list
-//                                         }
-//                                     }
-//        );
+        init(savedInstanceState);
 
         //Specify what action a specific gesture performs, in this case swiping right or left deletes the entry
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -142,6 +125,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(recyclerView); //after setup, attach the ItemTouchHelper to the RecyclerView
 
     }
+
 
     //could also use 'notifyDatasetChange', which is update, recalculates everything, better for more complicated examples
     //but this example does not have to do heavy calculating since only removing one item
@@ -272,6 +256,7 @@ public class ListWorkoutSessionActivity extends AppCompatActivity {
                 //attributions bond to the item has been changed
                 itemList.get(position).onCheckBoxClick(position); //get the item based off of position & call onCheckBoxClick given that position
 
+                Toast.makeText(getApplicationContext(), "CHECKBOX CLICKED", Toast.LENGTH_SHORT).show();
                 rviewAdapter.notifyItemChanged(position);
             }
         };

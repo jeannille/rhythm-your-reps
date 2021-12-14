@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  * Adapter acts as messenger between RViewHolder and the actual data (exercises) that will be displayed.
- * It reads the data and passes it to ViewHolder
+ * It reads the data and passes/binds it to a RViewHolder instance in the list.
  */
 
 //adapter for slightly different RecyclerView lists since user should be able to delete and check
@@ -24,11 +24,13 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
     private final ArrayList<ExerciseRecyclerData> itemList;
     private ItemClickListener listener; //listens for when card is clicked on
 
+
     //Constructor
     public RViewAdapter(ArrayList<ExerciseRecyclerData> itemList) {
         this.itemList = itemList;
     }
 
+//    listening for click on the item card (holder) itself
     public void setOnItemClickListener(ItemClickListener listener) {
         this.listener = listener;
     }
@@ -52,10 +54,13 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
 
         // RViewHolder's image icon, should be still image of Exercise item
         Picasso.get().load(currentItem.getGifUrl()).into(holder.itemGif);
-        Log.i("RVIEW ADAPTER bound gifUrl, resulting gif for this specific holder - YERRRR----> ", currentItem.getGifUrl() );
+        Log.i("RVIEW ADAPTER bound gifUrl, resulting gif for this specific holder wooo----> ", currentItem.getGifUrl() );
         holder.itemName.setText(currentItem.getName());
         holder.itemBodyPart.setText(currentItem.getBodyPart());
         holder.checkBox.setChecked(currentItem.getStatus());
+        //does not show equipment for smaller icon list
+
+
     }
 
     /**

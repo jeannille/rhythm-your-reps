@@ -69,6 +69,7 @@ public class ExerciseRecyclerData implements ItemClickListener{
         return gifUrl;
     }
 
+
     public void setGifUrl(String gifUrl) {
         this.gifUrl = gifUrl;
     }

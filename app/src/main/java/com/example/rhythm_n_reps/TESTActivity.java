@@ -124,7 +124,7 @@ public class TESTActivity extends AppCompatActivity {
 
                 //store selcted value, do not do intent, only push intent when target button clicked
                 selectedBodyPart = adapterB.getItemAtPosition(adapterB.getSelectedItemPosition()).toString();
-                Toast.makeText(TESTActivity.this, "HAVE selected BODYPART -------" + selectedBodyPart, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TESTActivity.this, "HAVE selected BODYPART -------" + selectedBodyPart, Toast.LENGTH_SHORT).show();
 //                result_view.setText("Exercises focused on body part: " + selectedBodyPart);
 
             }
@@ -149,10 +149,9 @@ public class TESTActivity extends AppCompatActivity {
         spinnerTarget.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterT, View view, int i, long l) {
-
                 //store selected value from drop down, specified target adapter view
                 selectedTarget = adapterT.getItemAtPosition(adapterT.getSelectedItemPosition()).toString();
-                Toast.makeText(TESTActivity.this, "HAVE selected TARGET -------" + selectedTarget, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TESTActivity.this, "HAVE selected TARGET -------" + selectedTarget, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -177,7 +176,7 @@ public class TESTActivity extends AppCompatActivity {
 
                 //store selected value from drop down, specified target adapter view
                 selectedEquipment = adapterE.getItemAtPosition(adapterE.getSelectedItemPosition()).toString();
-                Toast.makeText(TESTActivity.this, "HAVE selected TARGET -------" + selectedEquipment, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TESTActivity.this, "HAVE selected TARGET -------" + selectedEquipment, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -198,7 +197,7 @@ public class TESTActivity extends AppCompatActivity {
     public void goToService(View view) {
         switch (view.getId()) {
             case R.id.selectBodyPartSearchButton:
-                Toast.makeText(TESTActivity.this, "HAVE CLICKED BODYPART BUTTON--- and val is " + selectedBodyPart, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TESTActivity.this, "HAVE CLICKED BODYPART BUTTON--- and val is " + selectedBodyPart, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, WebServiceActivity.class);
                 String sendOver = "bodyPart/" + selectedBodyPart;
@@ -209,18 +208,18 @@ public class TESTActivity extends AppCompatActivity {
                 break;
 
             case R.id.selectTargetSearchButton:
-                Toast.makeText(TESTActivity.this, "HAVE CLICKED TARGET BUTTON--- and val is " + selectedTarget, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TESTActivity.this, "HAVE CLICKED TARGET BUTTON--- and val is " + selectedTarget, Toast.LENGTH_SHORT).show();
 
                 Intent intent2 = new Intent(this, WebServiceActivity.class);
                 String sendOver2 = "target/" + selectedTarget;
-                Log.i("TARGET BUTTON switch case ----- INTENT----- TESTActivity activity have gotten value of drop down", sendOver2);
+//                Log.i("TARGET BUTTON switch case ----- INTENT----- TESTActivity activity have gotten value of drop down", sendOver2);
                 intent2.putExtra("var", sendOver2);
 
                 startActivity(intent2);
                 break;
 
             case R.id.selectEquipSearchButton:
-                Toast.makeText(TESTActivity.this, "HAVE CLICKED EQUIPMENT BUTTON--- and val is " + selectedEquipment, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TESTActivity.this, "HAVE CLICKED EQUIPMENT BUTTON--- and val is " + selectedEquipment, Toast.LENGTH_SHORT).show();
 
                 Intent intent3 = new Intent(this, WebServiceActivity.class);
                 String sendOver3 = "equipment/" + selectedEquipment;

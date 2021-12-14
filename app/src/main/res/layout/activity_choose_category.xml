@@ -8,78 +8,25 @@
 
     <!--    android:entries="@array/bodyPart_array"-->
 
-    <Spinner
-        android:id="@+id/target_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ListView
+        android:layout_width="412dp"
+        android:layout_height="654dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
-
-
-    <Button
-        android:id="@+id/selectTargetSearchButton2"
-        android:layout_width="252dp"
-        android:layout_height="59dp"
-        android:backgroundTint="#4B6CAE"
-        android:text="Search by Target"
-        app:layout_constraintBottom_toTopOf="@+id/bodyPart_spinner2"
+        android:id="@+id/userListView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/target_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/textUserListView" />
 
-
-    <Button
-        android:id="@+id/selectBodyPartSearchButton"
-        android:layout_width="252dp"
-        android:layout_height="59dp"
-        android:backgroundTint="#4B6CAE"
-        android:text="Search by bodyPart"
-        app:layout_constraintBottom_toTopOf="@+id/equipment_spinner"
+    <TextView
+        android:id="@+id/textUserListView"
+        android:layout_width="316dp"
+        android:layout_height="44dp"
+        android:text="Select body part wanting to focus on today and we'll generate a workout!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bodyPart_spinner2" />
-
-    <Spinner
-        android:id="@+id/bodyPart_spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.362" />
-
-
-    <Spinner
-        android:id="@+id/equipment_spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.578" />
-
-    <Button
-        android:id="@+id/selectEquipSearchButton2"
-        android:layout_width="252dp"
-        android:layout_height="59dp"
-        android:backgroundTint="#4B6CAE"
-        android:text="Search by Equipment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/equipment_spinner2"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

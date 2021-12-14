@@ -17,10 +17,12 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
 
         switch (view.getId()) {
-//            case R.id.workshopButton:
+            case R.id.workshopButton:
 //                Intent workshopIntent = new Intent(this, WWorkshopActivity.class);
 //                startActivity(workshopIntent);
-//                break;
+                Intent generateWorkout = new Intent(this, ChooseCategoryActivity.class);
+                startActivity(generateWorkout);
+                break;
                 //button to open up web service - exercise
 //            case R.id.activityWebService:
 //                Intent webIntent = new Intent(this, WebServiceActivity.class);

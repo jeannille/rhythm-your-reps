@@ -4,12 +4,16 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,10 +26,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<ExerciseRecyclerData> exerciseRecyclerDataArrayList;
     private Context mcontext;
 
+    private ItemClickListener listener;
+
     // creating a constructor class.
     public RecyclerViewAdapter(ArrayList<ExerciseRecyclerData> recyclerDataArrayList, Context mcontext) {
         this.exerciseRecyclerDataArrayList = recyclerDataArrayList;
         this.mcontext = mcontext;
+    }
+
+    //listening for click, listener sent from RViewHolder
+    public void setOnItemClickListener(ItemClickListener listener) {
+        this.listener = listener;
     }
 
 
@@ -35,9 +46,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate Layout
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_layout, parent, false);
-        String vStr = view.toString();
-        Log.i("-----------------testing if we've reached adapter", vStr);
-        return new RecyclerViewHolder(view);
+//        String vStr = view.toString();
+//        Log.i("-----------------testing if we've reached adapter", vStr);
+        return new RecyclerViewHolder(view, listener);
     }
 
     //bind current position in RView to next available slot in RView of data array (cards) - set fields and load image
@@ -50,22 +61,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cardTargetView.setText("Target: " + modal.getTarget());
         holder.cardBodyPart.setText("Body part: " + modal.getBodyPart() + "\n\n" +"Target: " + modal.getTarget());
         holder.cardEquipmentView.setText("Equipment required: " + modal.getEquipment() );
+        holder.cardCheckBoxView.setChecked(modal.getStatus());
+
 
 //        Picasso.get().load(modal.getGifUrl()).into(holder.cardImageView); //make still image not gif for initial results list
-
 //        ImageView imageView= (ImageView) ;
         String imgStr = modal.getGifUrl();
         Glide.with(holder.cardImageView.getContext()).load(imgStr).into(holder.cardImageView);
 
-
     }
 
-    //private String bodyPart;
-    //    private String equipment;
-    //    private String gifUrl;
-    //    private String id;
-    //    private String name;
-    //    private String target;
 
     @Override
     public int getItemCount() {
@@ -79,8 +84,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView cardExerciseName, cardBodyPart, cardTargetView, cardEquipmentView ;
         private ImageView cardImageView;
 
+        public CheckBox cardCheckBoxView; //add to workout list
+
         // what's in an Exercise 'card'
-        public RecyclerViewHolder(@NonNull View itemView) {
+        public RecyclerViewHolder(@NonNull View itemView, final ItemClickListener listener) {
             super(itemView);
             // initializing the layout with its view ids.
             cardExerciseName = itemView.findViewById(R.id.idCardExerciseName); // name
@@ -88,6 +95,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cardTargetView = itemView.findViewById(R.id.idTargetCardView);
             cardImageView = itemView.findViewById(R.id.idCardImageView); //gif image
             cardEquipmentView = itemView.findViewById(R.id.idTargetCardView);
+            cardCheckBoxView = itemView.findViewById(R.id.checkboxSearchResultsList);
+
+//            Intent intent= new Intent(this, RecyclerViewAdapter.class);
+
+            cardCheckBoxView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    {
+                        //if the listener is not null, save this clicked item's position
+                        //don't need to worry about position for results page of exercises - user will select from here
+                        if (listener != null) {
+                            int position = getLayoutPosition();
+//                            Toast.makeText(mcontext.getApplicationContext(), "clicked checkbox", Toast.LENGTH_SHORT).show();
+                            if (position != RecyclerView.NO_POSITION) {
+                                listener.onCheckBoxClick(position);
+
+                            }
+                        }
+                        if(cardCheckBoxView.isChecked()) {
+                            //chechbox getContent is WebServiceActivity
+//                            String t = checkBox.getContext().toString();
+//                            Intent intent= new Intent(this, ListWorkoutSessionActivity.class);
+/*
+                            intent.putExtra("message","added item");
+                            startActivity(intent);
+
+*/
+
+
+                            Toast.makeText(mcontext.getApplicationContext(), "not clickedddd" + view.getId(), Toast.LENGTH_SHORT).show();
+                            Log.i("Checkbox clicked ------ result of checkbox context --- ", String.valueOf(itemView.getId()));
+                        }
+                    }
+                }
+            });
+
         }
 
     }

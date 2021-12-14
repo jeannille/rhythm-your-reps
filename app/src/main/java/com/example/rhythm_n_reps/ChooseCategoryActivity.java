@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,24 +20,35 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 //https://developer.android.com/guide/topics/ui/controls/spinner
 // all endpoints https://exercisedb.p.rapidapi.com/exercises/
+
 /**
  * Where User will choose to search for exercises by either target, bodyPart, or equipment.
  * The selection event handler for the spinner (of choices) is implemented by using AdapterView OnItemSelectedListener.
  * Registr a callback to be invoked when an item in this AdapterView has been clicked.
  */
-public class ChooseCategoryActivity extends AppCompatActivity implements OnItemSelectedListener {
+public class ChooseCategoryActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseCategoryActivity";
-//    private static final String API_KEY_ENDPOINT= "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
+    //    private static final String API_KEY_ENDPOINT= "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
 //    private String queryString;
+    ArrayList<ExerciseRecyclerData> exercisesList = new ArrayList<ExerciseRecyclerData>();
+    private static final String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
 
 
     //set lists of items for each category to search the exercises API by, endpoints for reference
@@ -113,57 +125,135 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_category);
 
-        //First Spinner for bodyPart category
-        //set associated spinners from layout
-        Spinner spinnerBodyParts = (Spinner) findViewById(R.id.bodyPart_spinner);
-        //equip spinner w/ listener
-        spinnerBodyParts.setOnItemSelectedListener(this);
-        ArrayAdapter adapterB = new ArrayAdapter(this, android.R.layout.simple_spinner_item, bodyParts);
-        // Specify the default spinner layout for dropdown list of choices
-        adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply adapter spinners respectively
-        spinnerBodyParts.setAdapter(adapterB);
+        Toast.makeText(this, "choose category", Toast.LENGTH_SHORT).show();
+
+        String url0 = "https://exercisedb.p.rapidapi.com/exercises/target/abs" + apiKeyEndPoint;
+
+        callWebserviceButtonHandler(url0);
+
     }
 
 
+    //when user clicks on button, new Async task created, get url user has entered and execute it
+    public void callWebserviceButtonHandler(String url) {
+        BackTask task = new BackTask(); //extends asyncTask
 
-//        spinnerBodyParts.setOnItemSelectedListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                view = null;
-//            }
-//        });
+        try {
+            //validate url and execute endpoint to get json response
+            url = NetworkUtil.validInput(url);
+            task.execute(url);
+        } catch (NetworkUtil.MyException e) {
+            Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
-/*
-        //Target category Spinner
-        Spinner spinnerTarget = (Spinner) findViewById(R.id.target_spinner);
-        spinnerTarget.setOnItemSelectedListener(this);
-        ArrayAdapter adapterT = new ArrayAdapter(this, android.R.layout.simple_spinner_item, target);
-        adapterT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTarget.setAdapter(adapterT);
+    public class BackTask extends AsyncTask<String, Integer, JSONArray> {
 
-        //Equipment spinner
-       Spinner spinnerEquipment = (Spinner) findViewById(R.id.equipment_spinner);
-        spinnerEquipment.setOnItemSelectedListener(this);
-        ArrayAdapter adapterE = new ArrayAdapter(this, android.R.layout.simple_spinner_item, equipment);
-        adapterE.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEquipment.setAdapter(adapterE);
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            Log.i(TAG, "Making progress...");
+        }
 
+        @Override
+        protected JSONArray doInBackground(String... params) {
+
+            JSONArray jArray = new JSONArray(); //placeholder for response array
+
+            try {
+                //current url to be parsed by NetworkUtil
+                URL url0 = new URL(params[0]); //String params of argument, just url - first item
+                String resp = NetworkUtil.httpResponse(url0); // full json array of results as a string given the endpoint (only use w/ shorter response results!)
+                jArray = new JSONArray(resp);
+
+                return jArray; //json array of returned exercises
+
+            } catch (MalformedURLException e) {
+                Log.e(TAG, "MalformedURLException");
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                Log.e(TAG, "ProtocolException");
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.e(TAG, "IOException");
+                e.printStackTrace();
+            } catch (JSONException e) {
+                Log.e(TAG, "JSONException");
+                e.printStackTrace();
+            }
+
+            return jArray;
+
+
+        }
+
+        //simple list view and adaper for returned array results
+        @Override
+        protected void onPostExecute(JSONArray jArray) {
+            super.onPostExecute(jArray);
+
+            TextView textView = findViewById(R.id.textUserListView);
+            JSONObject t = null;
+
+            ArrayList<String> myStringArray = new ArrayList<String>();
+
+
+
+            try {
+                for (int i = 0; i < jArray.length(); i++) {
+
+                    JSONObject jsonobject = jArray.getJSONObject(i);
+
+                    ExerciseRecyclerData exe = new ExerciseRecyclerData(jsonobject);
+//                    flowers.setName(jsonobject.getString("name"));
+                    exercisesList.add(exe); //add this Exe item to our resulting exercises list
+                    myStringArray.add(exe.getName() + "  " + exe.getTarget());
+
+                } //end of for loop, in try
+
+//                String exName = jArray.getJSONObject(0).getString("name");
+//                textView.setText(exName);
+
+
+                //now create adapter for our list of returned results, simple_list item is a formatted layout for each item
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_list_item_1, myStringArray);
+
+                // now set adapter to list view
+                ListView listView = (ListView) findViewById(R.id.userListView);
+                listView.setAdapter(adapter);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
+
+
+    /*
+    For future reference this code is faster and from the API documentation... wish i had seen this... sigh
+    OkHttpClient client = new OkHttpClient();
+
+Request request = new Request.Builder()
+	.url("https://exercisedb.p.rapidapi.com/exercises")
+	.get()
+	.addHeader("x-rapidapi-host", "exercisedb.p.rapidapi.com")
+	.addHeader("x-rapidapi-key", "3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f")
+	.build();
+
+Response response = client.newCall(request).execute();
      */
 
-        //now set resulting recyclerViews for after spinner value has been selected
-        //new intent for web handler
 
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+//
+//    @Override
+//    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 //        String chosenOption = (String) parent.getItemAtPosition(position);
 
 
+    //create intent and launch WebServiceActivity
 
-        //create intent and launch WebServiceActivity
-        //TODO uncomment after testing
        /*
 
         String userSelection = adapterView.getItemAtPosition(adapterView.getSelectedItemPosition()).toString();
@@ -181,9 +271,7 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
         */
 
 
-
-
-        //for each send over "category/{selectedItem}" format for url to web service
+    //for each send over "category/{selectedItem}" format for url to web service
        /*switch(adapterView.getId()){
            case R.id.bodyPart_spinner:
                //get name of array, ie. bodyParts for url
@@ -211,30 +299,29 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
 
         */
 
-       }
+//       }
 
 
-
-        //take in var and launch activity
+    //take in var and launch activity
 //        Intent intent = new Intent(this, WebServiceActivity.class );
 //        intent.putExtra( "selectedFilter", userSelection );
 
 
-        //start WebService activity - pass variable used to parse the GET url and render data results for views
+    //start WebService activity - pass variable used to parse the GET url and render data results for views
 //        this.startActivity(intent);
 
 //        Toast.makeText(getApplicationContext(), userSelection, Toast.LENGTH_LONG).show();
 
-        //example url request if user chose bodypart: https://exercisedb.p.rapidapi.com/exercises/bodyPart/userSelection?MYAPIKEY
+    //example url request if user chose bodypart: https://exercisedb.p.rapidapi.com/exercises/bodyPart/userSelection?MYAPIKEY
 
-        //once selected, a button below this spinner will call webServiceHandler w/ url above
-        //and new recyclerview will open etc
+    //once selected, a button below this spinner will call webServiceHandler w/ url above
+    //and new recyclerview will open etc
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        Toast.makeText(getApplicationContext(), "No selection made.", Toast.LENGTH_LONG).show();
-
-    }
+//    @Override
+//    public void onNothingSelected(AdapterView<?> adapterView) {
+//        Toast.makeText(getApplicationContext(), "No selection made.", Toast.LENGTH_LONG).show();
+//
+//    }
 
 //
 //    public void callWebserviceButtonHandler(String queryString) {
@@ -349,10 +436,7 @@ public class ChooseCategoryActivity extends AppCompatActivity implements OnItemS
 //            }
 //
 //        }
-    }
-
-
-
+}
 
 
 //}
