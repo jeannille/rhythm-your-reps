@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_goneMarginTop="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.766" />
 
@@ -73,7 +74,6 @@
         android:backgroundTint="#4B6CAE"
         android:onClick="goToService"
         android:text="Search by Equipment"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"

@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="373dp"
         android:layout_height="match_parent"
+        android:layout_margin="15dp"
         android:orientation="vertical">
 
         <!--image view to display our course image-->
@@ -18,17 +19,18 @@
         <!--text view for our course name-->
         <ImageView
             android:id="@+id/idCardImageView"
-            android:layout_width="225dp"
-            android:layout_height="144dp"
+            android:layout_width="272dp"
+            android:layout_height="198dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
             android:paddingLeft="20dp" />
 
         <TextView
             android:id="@+id/idCardExerciseName"
-            android:layout_width="224dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:layout_marginStart="20dp"
             android:padding="2dp"
             android:text="Exercise Name"
             android:textColor="@color/black"
@@ -46,9 +48,10 @@
             <TextView
                 android:id="@+id/idCardBodypart"
                 android:layout_width="wrap_content"
+
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:lineSpacingMultiplier="1.0"
+                android:lineSpacingMultiplier=".8"
                 android:padding="5dp"
                 android:text="body part"
                 android:textColor="@color/black"

@@ -9,4 +9,6 @@ public interface ItemClickListener {
     void onItemClick(int position);
 
     void onCheckBoxClick(int position);
+
+//    ExerciseRecyclerData onCheckBoxClick(int position);
 }

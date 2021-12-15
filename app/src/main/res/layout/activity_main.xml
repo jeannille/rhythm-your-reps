@@ -11,26 +11,43 @@
         android:id="@+id/textView"
         android:layout_width="257dp"
         android:layout_height="62dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="72dp"
         android:text="@string/main_page"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/workshopButton"
+        android:id="@+id/chooseCategoryActivity"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#009688"
         android:onClick="onClick"
-        android:text="Get randomized workout"
+        android:text="Search for by category"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.11" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonToSessionLIst"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_goneMarginBottom="20dp" />
+
+    <Button
+        android:id="@+id/buttonToSessionLIst"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#009688"
+        android:onClick="onClick"
+        android:text="Workout Session List"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityWebService"
+        app:layout_constraintVertical_bias="0.049" />
 
     <Button
         android:id="@+id/activityWebService"
@@ -45,34 +62,20 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/workshopButton"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.037" />
 
     <Button
-        android:id="@+id/buttonToSessionLIst"
+        android:id="@+id/workshopButton"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:backgroundTint="#009688"
         android:onClick="onClick"
-        android:text="Workout Session List"
+        android:text="Get randomized workout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityWebService"
-        app:layout_constraintVertical_bias="0.158" />
-
-    <Button
-        android:id="@+id/chooseCategoryActivity"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:backgroundTint="#009688"
-        android:onClick="onClick"
-        android:text="Search for by category"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonToSessionLIst"
-        app:layout_constraintVertical_bias="0.178" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.069" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

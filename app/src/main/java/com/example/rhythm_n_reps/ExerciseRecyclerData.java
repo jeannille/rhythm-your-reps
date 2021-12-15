@@ -2,6 +2,8 @@ package com.example.rhythm_n_reps;
 
 //represents one exercise returned from JSONArray requests
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,6 +70,10 @@ public class ExerciseRecyclerData implements ItemClickListener{
         this.gifUrl = gifUrl.replace("http:", "https:");
         return gifUrl;
     }
+//
+    public String getItemName() {
+        return name + (isChecked ? "(checked)" : "");
+    }
 
 
     public void setGifUrl(String gifUrl) {
@@ -111,6 +117,7 @@ public class ExerciseRecyclerData implements ItemClickListener{
     @Override
     public void onCheckBoxClick(int position) {
         isChecked = !isChecked;
+        Log.i("The item clicked is-----", this.getId() + this.getItemName());
     }
     //create overide toString to display the exercise json obj nicely
 }

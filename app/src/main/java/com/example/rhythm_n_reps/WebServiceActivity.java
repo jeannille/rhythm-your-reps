@@ -36,6 +36,11 @@ import java.net.URL;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 //activity handles the user's input (from WebView), makes (HTTP) request to the web service
 // makes request and receives responses from the web service (third party api)
@@ -55,9 +60,11 @@ public class WebServiceActivity extends AppCompatActivity {
     private ArrayList<ExerciseRecyclerData> recyclerDataArrayList = new ArrayList<>();
     private RecyclerViewAdapter recyclerViewAdapter;
     private ProgressBar progressBar;
+//    private ArrayList<ExerciseRecyclerData> randomList = new ArrayList<>();
     private String url0;
     private String queryStringReceived; //sent via intent (user selection)
     CheckBox addToWorkout;
+    EditText userInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,53 +79,64 @@ public class WebServiceActivity extends AppCompatActivity {
 //        mURLEditText = findViewById(R.id.URL_editText);
 //        mTitleTextView = findViewById(R.id.result_textview);
         addToWorkout = findViewById(R.id.checkboxSearchResultsList);
+        userInput = findViewById(R.id.userEditBox);
+
+//        String test = userInput.toString();
 
 //        progressBar = findViewById(R.id.idProgBarWebS);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-//            queryStringReceived = extras.getString("selectedFilter"); //have to get queryString2 and 3
-            queryStringReceived = extras.getString("var");
-        }
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+////            queryStringReceived = extras.getString("selectedFilter"); //have to get queryString2 and 3
+//            queryStringReceived = extras.getString("var");
+//        }
 
-        Log.i("successfully retrieves extras from choose activity", queryStringReceived);
-
-
+//        Log.i("successfully retrieves extras from choose activity", queryStringReceived);
 
 //        String choice = queryStringReceived.substring(queryStringReceived.lastIndexOf("/") + 1); //get the selected after category
-        String[] queryArr = queryStringReceived.split("/"); // category / choice
-        Log.i("~~~~~~~~~ use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[0]);
-        Log.i("~~~~~~~~~ CATEGORY use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[1]);
-
-        TextView result_view = (TextView)findViewById(R.id.URL_editText); //get category and choice for query results view
-        resultTextPage(queryArr[0], queryArr[1], result_view);
+//        String[] queryArr = queryStringReceived.split("/"); // category / choice
+//        Log.i("~~~~~~~~~ use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[0]);
+//        Log.i("~~~~~~~~~ CATEGORY use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[1]);
+//
+//        TextView result_view = (TextView)findViewById(R.id.URL_editText); //get category and choice for query results view
+//        resultTextPage(queryArr[0], queryArr[1], result_view);
 
 
         //wanted user to see the gif when cliked on image instead of having gif by default
-//        ImageView imageView = findViewById(R.id.idCardImageView);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "clicked on image", Toast.LENGTH_SHORT).show();
-//
-//                //R.get card id to get id.. ?? how will you get id of exercise to display
-//                //mabe just replace with glide so it moves
-//
-//                //if in gif mode change to still
-//                //if still, change to gif
-//            }
-//        });
 
-        url0 = "https://exercisedb.p.rapidapi.com/exercises/" + queryStringReceived + apiKeyEndPoint;
-        Log.i("Fully concatenated url after getting info and showing in WebService Activity-------", url0);
+//        url0 = "https://exercisedb.p.rapidapi.com/exercises/" + queryStringReceived + apiKeyEndPoint;
+//        url0 = "https://exercisedb.p.rapidapi.com/exercises/target/" + "delts" + apiKeyEndPoint;
+//        Log.i("Fully concatenated url after getting info and showing in WebService Activity-------", url0);
 
         //where the magic happens
-        callWebserviceButtonHandler(url0);
+//        callWebserviceButtonHandler(url0);
 
     }
 
+    public void selectItems(View view) {
+
+        String trim = userInput.getText().toString();
+        String url2 = "https://exercisedb.p.rapidapi.com/exercises/target/" + trim.toLowerCase() + apiKeyEndPoint;
+        Log.i("URL with user input", url2);
+        callWebserviceButtonHandler(url2);
+
+        Log.i("-----", trim);
+
+    }
+
+//        ArrayList<ExerciseRecyclerData> test = new ArrayList<ExerciseRecyclerData>();
+//
+////        callWebserviceButtonHandler(url0);
+//        for (ExerciseRecyclerData e: recyclerDataArrayList){
+//            if(e.getStatus()){
+//                test.add(e);
+//            }
+//        }
+//        Log.i("Added the items ------- ", test.toString());
+
+
     //generate different responses according to selection
-    public void resultTextPage(String category, String selection, TextView textView){
+    public static void resultTextPage(String category, String selection, TextView textView){
 
         switch (category) {
             case "bodyPart":
@@ -236,14 +254,28 @@ public class WebServiceActivity extends AppCompatActivity {
 //                String imgStr = jArray.getJSONObject(0).getString("gifUrl").replace("http", "https");
 //                Glide.with(getApplicationContext()).load(imgStr).into(imageView);
 
-                Integer len = recyclerDataArrayList.size();
                 for (int i = 0; i < jArray.length(); i++) {
 
                     ExerciseRecyclerData e = new ExerciseRecyclerData(jArray.getJSONObject(i));
                     recyclerDataArrayList.add(e);
                 }
-//                Toast.makeText(getApplication(), len.toString(), Toast.LENGTH_SHORT).show();
-//
+
+
+                ArrayList<ExerciseRecyclerData> randomList = new ArrayList<>();
+                //just for ranomizing 3
+
+                for(int i=0; i <3; i++){
+                    Random random = new Random();
+                    int one = random.nextInt(recyclerDataArrayList.size() - 0 + 1) + 0;
+//                    int value = random.nextInt(jArray.length());
+                    randomList.add(recyclerDataArrayList.get(one));
+//                    Log.i("---", recyclerDataArrayList.get(value).getItemName() );
+                }
+
+
+
+
+
                 //create RecyclerView
                 recyclerView = findViewById(R.id.idRecyclerViewWebS);
                 //create and set layout manager for recyclerView
@@ -251,7 +283,7 @@ public class WebServiceActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(rLayoutManger);
 
                 // create & set adapter to our recycler view
-                recyclerViewAdapter = new RecyclerViewAdapter(recyclerDataArrayList, WebServiceActivity.this);
+                recyclerViewAdapter = new RecyclerViewAdapter(randomList, WebServiceActivity.this);
                 recyclerView.setAdapter(recyclerViewAdapter);
 
 //                if (!recyclerDataArrayList.get(2).getStatus()){
@@ -261,14 +293,31 @@ public class WebServiceActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 result_view.setText("Something went wrong!");
             }
-
-            //if chechbox is selected show toast message
-//            if (addToWorkout.isChecked()) {
-//                Toast.makeText(getApplicationContext(), "testing after adding", Toast.LENGTH_SHORT).show();
 //            }
 
         }
     }
+
+//    public void testRequest(View view) throws IOException { //string id then put in ur endpoint
+//        OkHttpClient client = new OkHttpClient();
+//
+//        Request request = new Request.Builder()
+//                .url("https://exercisedb.p.rapidapi.com/exercises/exercise/0936" + apiKeyEndPoint)
+//                .get()
+//                .addHeader("x-rapidapi-host", "exercisedb.p.rapidapi.com")
+//                .addHeader("x-rapidapi-key", "3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f")
+//                .build();
+//
+//        try (Response response = client.newCall(request).execute()){
+//            String test = response.body().string();
+//
+//            Toast.makeText(getApplicationContext(), "result from select test" + test, Toast.LENGTH_SHORT).show();
+//
+////            return test;
+//        }
+//
+//
+//    }
 
 //                 traverse to add data to Adapter object
 //                for (int i = 0; i < recyclerDataArrayList.size(); i++) {
@@ -294,6 +343,7 @@ public class WebServiceActivity extends AppCompatActivity {
 
 
 
+
     //tester method for keeping gif as drawable, stackoverflow question on getting from URL path
     //should return drawable
     public static Drawable drawableFromUrl(String url) throws IOException {
@@ -308,6 +358,17 @@ public class WebServiceActivity extends AppCompatActivity {
     }
 
 }
+
+class RandomNumber {
+    public static void main(String[] args) {
+        RandomNumber r = new RandomNumber();
+//        System.out.println(r.random(5, 10));
+    }
+    public int random(int min, int max) {
+        return new Random().nextInt(max - min + 1) + min;
+    }
+}
+
 
 
 // should use resource strings instead of concatenating when setting text next time

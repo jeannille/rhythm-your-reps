@@ -59,10 +59,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ExerciseRecyclerData modal = exerciseRecyclerDataArrayList.get(position);
         holder.cardExerciseName.setText("Exercise: " +  modal.getName() );
         holder.cardTargetView.setText("Target: " + modal.getTarget());
-        holder.cardBodyPart.setText("Body part: " + modal.getBodyPart() + "\n\n" +"Target: " + modal.getTarget());
+        holder.cardBodyPart.setText("Body part: " + modal.getBodyPart() + "\n" +"Target: " + modal.getTarget());
         holder.cardEquipmentView.setText("Equipment required: " + modal.getEquipment() );
         holder.cardCheckBoxView.setChecked(modal.getStatus());
-
 
 //        Picasso.get().load(modal.getGifUrl()).into(holder.cardImageView); //make still image not gif for initial results list
 //        ImageView imageView= (ImageView) ;
@@ -120,11 +119,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 /*
                             intent.putExtra("message","added item");
                             startActivity(intent);
-
 */
-
-
-                            Toast.makeText(mcontext.getApplicationContext(), "not clickedddd" + view.getId(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mcontext.getApplicationContext(), "not clickedddd" + cardExerciseName.getText(), Toast.LENGTH_SHORT).show();
                             Log.i("Checkbox clicked ------ result of checkbox context --- ", String.valueOf(itemView.getId()));
                         }
                     }

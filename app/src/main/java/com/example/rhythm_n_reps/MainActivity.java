@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.workshopButton:
 //                Intent workshopIntent = new Intent(this, WWorkshopActivity.class);
 //                startActivity(workshopIntent);
-                Intent generateWorkout = new Intent(this, ChooseCategoryActivity.class);
+                Intent generateWorkout = new Intent(this, WebServiceActivity.class);
                 startActivity(generateWorkout);
                 break;
                 //button to open up web service - exercise
@@ -28,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
 //                Intent webIntent = new Intent(this, WebServiceActivity.class);
 //                startActivity(webIntent);
 //                break;
+
             case R.id.buttonToSessionLIst:
-                Intent listSessionIntent = new Intent(this, ListWorkoutSessionActivity.class);
+                Intent listSessionIntent = new Intent(this, ListWorkoutSessionActivity.class); //smaller icons
                 startActivity(listSessionIntent);
                 break;
-            //testing
+            //TEST Activity opens ChooseActivity
             case R.id.chooseCategoryActivity:
-                Intent spinnersIntent = new Intent(this, TESTActivity.class);
+                Intent spinnersIntent = new Intent(this, TESTActivity.class); //goes to spinners than large list
                 startActivity(spinnersIntent);
                 break;
         }

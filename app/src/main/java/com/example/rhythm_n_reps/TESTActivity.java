@@ -13,12 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*
-class to test connection between user selection and passing to web service
- */
-
 /**
- * CURRENT TESTER tentatively replacing ChooseCategoryActivity ----
+ * replacing ChooseCategoryActivity ----
  * Where User will choose to search for exercises by either target, bodyPart, or equipment.
  * The selection event handler for the spinner (of choices) is implemented by using AdapterView OnItemSelectedListener.
  * Registr a callback to be invoked when an item in this AdapterView has been clicked.
@@ -102,10 +98,28 @@ public class TESTActivity extends AppCompatActivity {
             "wheel roller"};
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testactivity);
+//
+//        //testing to sned info over
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//
+//            //call method to deal with response, only when user selected to add something
+//            String message = extras.getString("message");
+//            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+//
+//            //c
+//
+//        }
+//        TextView textView = findViewById(R.id.tvReturnData);
+//        textView.setText(message);
+
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SETUP FIRST SPINNER - Exercises filtered by BODYPART ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,12 +135,10 @@ public class TESTActivity extends AppCompatActivity {
         spinnerBodyParts.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterB, View view, int i, long l) {
-
                 //store selcted value, do not do intent, only push intent when target button clicked
                 selectedBodyPart = adapterB.getItemAtPosition(adapterB.getSelectedItemPosition()).toString();
 //                Toast.makeText(TESTActivity.this, "HAVE selected BODYPART -------" + selectedBodyPart, Toast.LENGTH_SHORT).show();
 //                result_view.setText("Exercises focused on body part: " + selectedBodyPart);
-
             }
 
             @Override
@@ -199,18 +211,18 @@ public class TESTActivity extends AppCompatActivity {
             case R.id.selectBodyPartSearchButton:
 //                Toast.makeText(TESTActivity.this, "HAVE CLICKED BODYPART BUTTON--- and val is " + selectedBodyPart, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(this, WebServiceActivity.class);
+                Intent intent = new Intent(this, ChooseCategoryActivity.class);
                 String sendOver = "bodyPart/" + selectedBodyPart;
                 Log.i("TESTActivity activity have gotten value of drop down", sendOver);
                 intent.putExtra("var", sendOver);
-
                 startActivity(intent);
+
                 break;
 
             case R.id.selectTargetSearchButton:
 //                Toast.makeText(TESTActivity.this, "HAVE CLICKED TARGET BUTTON--- and val is " + selectedTarget, Toast.LENGTH_SHORT).show();
 
-                Intent intent2 = new Intent(this, WebServiceActivity.class);
+                Intent intent2 = new Intent(this, ChooseCategoryActivity.class);
                 String sendOver2 = "target/" + selectedTarget;
 //                Log.i("TARGET BUTTON switch case ----- INTENT----- TESTActivity activity have gotten value of drop down", sendOver2);
                 intent2.putExtra("var", sendOver2);
@@ -221,14 +233,13 @@ public class TESTActivity extends AppCompatActivity {
             case R.id.selectEquipSearchButton:
 //                Toast.makeText(TESTActivity.this, "HAVE CLICKED EQUIPMENT BUTTON--- and val is " + selectedEquipment, Toast.LENGTH_SHORT).show();
 
-                Intent intent3 = new Intent(this, WebServiceActivity.class);
+                Intent intent3 = new Intent(this, ChooseCategoryActivity.class);
                 String sendOver3 = "equipment/" + selectedEquipment;
                 Log.i("triggered BODYPART BUTTON switch case ----- INTENT----- TESTActivity activity have gotten value of drop down", sendOver3);
                 intent3.putExtra("var", sendOver3);
 
                 startActivity(intent3);
                 break;
-
 
         }
     }

@@ -9,24 +9,40 @@
     <!--    android:entries="@array/bodyPart_array"-->
 
     <ListView
-        android:layout_width="412dp"
-        android:layout_height="654dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/userListView"
+        android:layout_width="410dp"
+        android:layout_height="602dp"
+        android:layout_marginStart="10dp"
+        app:layout_wrapBehaviorInParent="vertical_only"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUserListView" />
+        app:layout_constraintTop_toBottomOf="@+id/textUserListView"
+        app:layout_constraintVertical_bias="0.173">
+    </ListView>
 
     <TextView
         android:id="@+id/textUserListView"
+        android:layout_marginTop="10dp"
         android:layout_width="316dp"
         android:layout_height="44dp"
         android:text="Select body part wanting to focus on today and we'll generate a workout!"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add selected exercises"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userListView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

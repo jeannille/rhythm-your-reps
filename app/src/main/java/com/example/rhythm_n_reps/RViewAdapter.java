@@ -23,6 +23,7 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
 
     private final ArrayList<ExerciseRecyclerData> itemList;
     private ItemClickListener listener; //listens for when card is clicked on
+    private ArrayList<String> idNumbers;
 
 
     //Constructor
@@ -57,6 +58,8 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewHolder> {
         Log.i("RVIEW ADAPTER bound gifUrl, resulting gif for this specific holder wooo----> ", currentItem.getGifUrl() );
         holder.itemName.setText(currentItem.getName());
         holder.itemBodyPart.setText(currentItem.getBodyPart());
+        holder.itemEquip.setText(currentItem.getEquipment());
+        holder.itemTarget.setText(currentItem.getTarget());
         holder.checkBox.setChecked(currentItem.getStatus());
         //does not show equipment for smaller icon list
 

@@ -27,14 +27,16 @@
          <activity
          android:name=".ChooseCategoryActivity"
          android:exported="true"
-         android:parentActivityName=".MainActivity" />
+         android:parentActivityName=".TESTActivity"
+             android:screenOrientation="portrait"/>
 <!--         <activity -->
         <!-- android:name=".ListViewResults" -->
         <!-- android:exported="true" /> -->
          <activity
          android:name=".ListWorkoutSessionActivity"
          android:exported="true"
-         android:parentActivityName=".MainActivity" />
+         android:parentActivityName=".MainActivity"
+             android:screenOrientation="portrait"/>
         <activity
             android:name=".WebServiceActivity"
             android:exported="true"

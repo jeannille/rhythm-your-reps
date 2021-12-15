@@ -27,6 +27,8 @@ public class CategoryAdapter extends ArrayAdapter<ExerciseRecyclerData> {
     private ArrayList<ExerciseRecyclerData> exercises;
     private Context mcontext;
 
+    private ItemClickListener listener;
+
 
     public CategoryAdapter(@NonNull Context context, int resource, ArrayList<ExerciseRecyclerData> exercises) {
 
@@ -34,6 +36,11 @@ public class CategoryAdapter extends ArrayAdapter<ExerciseRecyclerData> {
         this.mcontext = context;
         this.exercises = exercises;
 
+    }
+
+    //    listening for click on the item card (holder) itself
+    public void setOnItemClickListener(ItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -65,10 +72,10 @@ public class CategoryAdapter extends ArrayAdapter<ExerciseRecyclerData> {
 
 
             //insert still image of gif for now
-            Picasso.get().load(exercise.getGifUrl()).into(cardImageView); //make still image not gif for initial results list
+//            Picasso.get().load(exercise.getGifUrl()).into(cardImageView); //make still image not gif for initial results list
 //        ImageView imageView= (ImageView) ;
-//            String imgStr = exercise.getGifUrl();
-//            Glide.with(cardImageView.getContext()).load(imgStr).into(cardImageView);
+            String imgStr = exercise.getGifUrl();
+            Glide.with(cardImageView.getContext()).load(imgStr).into(cardImageView);
         }
 
         return v;

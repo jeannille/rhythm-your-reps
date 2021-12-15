@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -49,6 +52,12 @@ public class ChooseCategoryActivity extends AppCompatActivity {
 //    private String queryString;
     ArrayList<ExerciseRecyclerData> exercisesList = new ArrayList<ExerciseRecyclerData>();
     private static final String apiKeyEndPoint = "?rapidapi-key=3dc44b11e1msh1ffd3a2125bf15fp1f0c21jsn1a1dde786b0f";
+    private String queryStringReceived; //sent via intent (user selection)
+    private ArrayList<String> idNumbers = new ArrayList<String>();
+
+    private ArrayList<ExerciseRecyclerData> listToKeep = new ArrayList<>();
+
+    private Button selectExercisesButton;
 
 
     //set lists of items for each category to search the exercises API by, endpoints for reference
@@ -125,11 +134,45 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_category);
 
-        Toast.makeText(this, "choose category", Toast.LENGTH_SHORT).show();
 
-        String url0 = "https://exercisedb.p.rapidapi.com/exercises/target/abs" + apiKeyEndPoint;
+
+//        String url0 = "https://exercisedb.p.rapidapi.com/exercises/target/abs" + apiKeyEndPoint;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+//            queryStringReceived = extras.getString("selectedFilter"); //have to get queryString2 and 3
+            queryStringReceived = extras.getString("var");
+        }
+
+        String[] queryArr = queryStringReceived.split("/"); // category / choice
+        Log.i("~~~~~~~~~ use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[0]);
+        Log.i("~~~~~~~~~ CATEGORY use for result view ~~~~~~~~~~~~~~  retrieves extras from choose activity", queryArr[1]);
+
+        TextView result_view = (TextView)findViewById(R.id.textUserListView); //get category and choice for query results view
+        WebServiceActivity.resultTextPage(queryArr[0], queryArr[1], result_view);
+
+        String url0 = "https://exercisedb.p.rapidapi.com/exercises/" + queryStringReceived + apiKeyEndPoint;
 
         callWebserviceButtonHandler(url0);
+
+        selectExercisesButton = findViewById(R.id.addSelected);
+
+        selectExercisesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent sendItems = new Intent(getApplicationContext(), ChooseCategoryActivity.class);
+                //toKeepList should be maintained, anytime the status of one click is changed to +
+
+                Bundle bundle = new Bundle();
+
+                startActivity(sendItems);
+            }
+        });
+
+
+
+
 
     }
 
@@ -201,20 +244,48 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                     JSONObject jsonobject = jArray.getJSONObject(i);
 
                     ExerciseRecyclerData exe = new ExerciseRecyclerData(jsonobject);
-//                    flowers.setName(jsonobject.getString("name"));
+//                    exe.setName(jsonobject.getString("name"));
                     exercisesList.add(exe); //add this Exe item to our resulting exercises list
 //                    myStringArray.add(exe.getName() + "  " + exe.getTarget());
 
                 } //end of for loop, in try
 
-//                String exName = jArray.getJSONObject(0).getString("name");
-//                textView.setText(exName);
-
                 //now create adapter for our list of returned results, simple_list item is a formatted layout for each item
-//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_list_item_1, myStringArray);
 
                 CategoryAdapter adapter = new CategoryAdapter(getApplicationContext(), R.layout.activity_choose_category, exercisesList);
+
+                ItemClickListener itemClickListener = new ItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        //attributions bond to the item has been changed
+                        exercisesList.get(position).onItemClick(position); //get the item based off of position & call onItemClick given that position
+
+//                        adapter.notifyItemChanged(position); //notify adapter items have changed
+                    }
+
+                    @Override
+                    public void onCheckBoxClick(int position) {
+                        //changes STATUS of exerciseData item to isChecked
+                        exercisesList.get(position).onCheckBoxClick(position); //get the item based off of position & call onCheckBoxClick given that position
+                        ExerciseRecyclerData clickedExercise = exercisesList.get(position); //get actual object that was clicked
+
+                        String exerciseClicked = clickedExercise.getItemName();
+                        String id = " id-----  "+ clickedExercise.getId(); //actual id
+                        if(clickedExercise.getStatus()) {
+                            listToKeep.add(exercisesList.get(position)); //get the item that was clicked and add to araylist
+                            idNumbers.add(clickedExercise.getId());
+                            Toast.makeText(getApplicationContext(), "CHECKBOX CLICKED " + exerciseClicked + id, Toast.LENGTH_SHORT).show();
+                        }
+//                        Toast.makeText(getApplicationContext(), "CHECKBOX CLICKED " + exerciseClicked + id, Toast.LENGTH_SHORT).show();
+
+                        //attributions bond to the item has been changed
+//                        adapter.notifyItemChanged(position);
+                    }
+                };
+
+                adapter.setOnItemClickListener(itemClickListener);
                 // now set adapter to list view
+
                 ListView listView = (ListView) findViewById(R.id.userListView);
                 listView.setAdapter(adapter);
 
@@ -226,7 +297,6 @@ public class ChooseCategoryActivity extends AppCompatActivity {
 
 
     }
-
 
     /*
     For future reference this code is faster and from the API documentation... wish i had seen this... sigh

@@ -19,23 +19,27 @@
 
             <TextView
                 android:id="@+id/URL_editText"
-                android:layout_width="match_parent"
+                android:layout_width="363dp"
                 android:layout_height="wrap_content"
-                android:text="Name of Exercise"
-                android:textSize="20sp"
-                android:layout_marginHorizontal="30sp"/>
-
-            <TextView
-                android:id="@+id/result_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="4sp"
-                android:singleLine="false"
-                android:text=""
-                android:textColor="#081F50"
+                android:layout_marginHorizontal="30sp"
+                android:layout_marginTop="10dp"
+                android:text="Your generated focused set: enter targeted muscles (ie. lats, quads, abs, biceps...)"
                 android:textSize="18sp" />
 
-<!--            <ImageView-->
+            <EditText
+                android:id="@+id/userEditBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/GenerateRandom"
+                android:layout_width="378dp"
+                android:layout_height="wrap_content"
+                android:onClick="selectItems"
+                android:text="Generate" />
+
+            <!--            <ImageView-->
 <!--                android:id="@+id/webServiceImage"-->
 <!--                android:layout_width="267dp"-->
 <!--                android:layout_height="359dp"-->
@@ -43,11 +47,12 @@
 <!--                android:layout_marginBottom="20dp"-->
 <!--                android:isScrollContainer="true" />-->
 
+
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/idRecyclerViewWebS"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="50dp"/>
+                android:id="@+id/idRecyclerViewWebS"
+                android:layout_width="match_parent"
+                android:layout_height="568dp"
+                android:paddingTop="5dp" />
 
 
         </LinearLayout>

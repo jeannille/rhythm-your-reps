@@ -1,4 +1,5 @@
 package com.example.rhythm_n_reps;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ public class RViewHolder extends RecyclerView.ViewHolder {
     public ImageView itemGif; //image view of exercise, use Picasso
     public TextView itemName; //description, name
     public TextView itemBodyPart;
+    public TextView itemEquip;
+    public TextView itemTarget;
 
     public CheckBox checkBox; //add to workout list
 //    final static ItemClickListener listener = null;
@@ -29,6 +32,9 @@ public class RViewHolder extends RecyclerView.ViewHolder {
         itemName = itemView.findViewById(R.id.item_name);
         itemBodyPart = itemView.findViewById(R.id.item_desc);
         checkBox = itemView.findViewById(R.id.checkbox);
+        itemEquip = itemView.findViewById(R.id.item_equip);
+        itemTarget = itemView.findViewById(R.id.item_Target);
+
 //        itemEquipment = itemView.findViewById(R.id.eq)
 //        listener = lis
         //below, set on click listener for itemViews
@@ -45,6 +51,7 @@ public class RViewHolder extends RecyclerView.ViewHolder {
                         //if onClick occurs before RecyclerView was able to calculate position, ignore click
                         //Only save position if it has been determined (suggestion from docs)
 
+
                         listener.onItemClick(position); //call onItemClick w calculated position of click from Activity
                     }
                 }
@@ -59,14 +66,12 @@ public class RViewHolder extends RecyclerView.ViewHolder {
                 if (listener != null) {
                     int position = getLayoutPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onCheckBoxClick(position);
-//                        Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+                        listener.onCheckBoxClick(position); //this changes the is Checked status of the item
+                        //before being adapted for the list
+//                        Log.i("-----", "clicked check mark");
                     }
                 }
 
-                if (checkBox.isChecked()) {
-                    Toast.makeText(v.getContext(), "clicked on image", Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }
